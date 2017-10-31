@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
     val kattisApi = KattisApi(repo)
 
     var authCookies = kattisApi.login(Settings.user, Settings.token)
-    var newSession = kattisApi.
+//    var newSession = kattisApi.
 //    var newContest = get("http://open.kattis.com/new-contest", cookies = authCookies, headers = Headers)
 
 //    File("responses/login.html").bufferedWriter().use {
