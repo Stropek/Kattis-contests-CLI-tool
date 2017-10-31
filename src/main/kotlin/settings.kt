@@ -25,7 +25,7 @@ class Settings {
                     } }
         }
 
-        val user = dictionary["username"]
-        val token = dictionary["token"]
+        val user = dictionary["username"].toString()
+        val token = dictionary["token"].toString()
     }
 }
