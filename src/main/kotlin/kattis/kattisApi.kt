@@ -17,14 +17,20 @@ import khttp.structures.cookie.CookieJar
 //problemgroup_edit: "/problemgroups/{0}/edit"
 
 interface IKattisApi {
-    fun login(user: String, toke: String) : CookieJar
+    fun createNewContest(name: String)
+
+    fun login(user: String, toke: String) : String
 }
 
 class KattisApi(val kattisRepository: IKattisRepository) : IKattisApi {
-    override fun login(user: String, token: String) : CookieJar {
+    override fun createNewContest(name: String) {
+        TODO("not implemented")
+    }
+
+    override fun login(user: String, token: String) : String {
         val loginArgs = mapOf("user" to user, "token" to token, "script" to "true")
 
         var response = kattisRepository.login(loginArgs)
-        return response.cookies
+        return response.text
     }
 }

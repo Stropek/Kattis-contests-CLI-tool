@@ -2,17 +2,14 @@ import configuration.*
 import kattis.KattisApi
 import kattis.KattisRepository
 
-import khttp.get
-import khttp.post
-
-import java.io.File
-
 fun main(args: Array<String>) {
+    //TODO: add ability to run from a command line
+
     val repo = KattisRepository()
     val kattisApi = KattisApi(repo)
 
-    var authCookies = kattisApi.login(Settings.user, Settings.token)
-//    var newSession = kattisApi.
+    kattisApi.login(Settings.user, Settings.token)
+    kattisApi.createNewContest("NewContestFromApp")
 //    var newContest = get("http://open.kattis.com/new-contest", cookies = authCookies, headers = Headers)
 
 //    File("responses/login.html").bufferedWriter().use {

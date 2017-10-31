@@ -22,9 +22,8 @@ internal class KattisApiTests {
 
     @Test fun login_validRepoResponse_returnsAuthCookie() {
         // given
-        val cookieJar = CookieJar(mapOf("cookie_1" to "value_1"))
         val responseMock = mock<Response> {
-            on { cookies } doReturn cookieJar
+            on { text } doReturn "Login successful!"
         }
         val repoMock = mock<IKattisRepository> {
             on { login(any()) } doReturn responseMock
@@ -35,6 +34,6 @@ internal class KattisApiTests {
         val result = api.login("user", "token")
 
         // then
-        assertEquals(result, cookieJar)
+        assertEquals(result, "Login successful!")
     }
 }
