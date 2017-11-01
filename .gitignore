@@ -22,7 +22,4 @@
 hs_err_pid*
 
 responses/
-.gradle/
 .idea/
-build/
-out/
