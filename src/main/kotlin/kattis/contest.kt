@@ -4,7 +4,7 @@ class Contest {
     var isPrivileged: Boolean = false
     var existing: Boolean = false
     var shortName: String = ""
-    var csrf_token: String = ""
+    var csrfToken: String = ""
     var judges: MutableList<String> = mutableListOf()
     var teams: MutableList<String> = mutableListOf()
 
@@ -30,6 +30,12 @@ class Contest {
             dictionary.forEach {
                 when (it.key) {
                     "is_privileged" -> contest.isPrivileged = it.value.toBoolean()
+                    "existing" -> contest.existing = it.value.toBoolean()
+                    "short_name" -> contest.shortName = it.value
+                    "csrf_token" -> contest.csrfToken = it.value
+                    // TODO:
+                    // "teams" ->
+                    // "judges" ->
                 }
             }
 
