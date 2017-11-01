@@ -3,10 +3,12 @@ package kattis
 import khttp.get
 import khttp.responses.Response
 import khttp.structures.cookie.CookieJar
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import javax.naming.AuthenticationException
 
 interface IKattisRepository {
-    fun getNewContestToken() : String
+    fun getNewContestDocument() : Document
 
     fun login(user: Map<String, String>) : Response
 }
@@ -17,16 +19,23 @@ class KattisRepository : IKattisRepository {
 
     lateinit var authCookies: CookieJar
 
-    override fun getNewContestToken(): String {
-        if (authCookies == null)
-            throw AuthenticationException("You need to log in first!")
+    override fun getNewContestDocument(): Document {
+        ensureAuthentication()
 
-        return "get csrf_token from new-contest page"
+        return Jsoup.connect("$baseUrl/new-contest")
+                .cookies(authCookies)
+                .headers(headers)
+                .get()
     }
 
     override fun login(loginArgs: Map<String, String>): Response {
         var response = get("$baseUrl/login", data = loginArgs, headers = headers)
         authCookies = response.cookies
         return response
+    }
+
+    private fun ensureAuthentication() {
+        if (authCookies == null)
+            throw AuthenticationException("You need to log in first!")
     }
 }

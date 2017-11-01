@@ -1,7 +1,5 @@
 package kattis
 
-import khttp.structures.cookie.CookieJar
-
 //ajax_session_edit: "/ajax/session",
 //ajax_session_banner: "/ajax/session/banner",
 //ajax_session_judge: "/ajax/session/judge",
@@ -17,14 +15,21 @@ import khttp.structures.cookie.CookieJar
 //problemgroup_edit: "/problemgroups/{0}/edit"
 
 interface IKattisApi {
-    fun createNewContest(name: String)
+    fun createBlankContest() : Contest
 
     fun login(user: String, toke: String) : String
 }
 
 class KattisApi(val kattisRepository: IKattisRepository) : IKattisApi {
-    override fun createNewContest(name: String) {
 
+    // TODO: unit tests
+    override fun createBlankContest() : Contest {
+        val document = kattisRepository.getNewContestDocument()
+
+        var contestData = document.select("script")
+                .single { it.toString().contains("Kattis.views.contest.edit.data") }
+
+        return Contest.parse(contestData.toString())
     }
 
     override fun login(user: String, token: String) : String {

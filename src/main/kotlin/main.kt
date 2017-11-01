@@ -2,7 +2,6 @@ import configuration.*
 import kattis.Contest
 import kattis.KattisApi
 import kattis.KattisRepository
-import khttp.get
 import org.jsoup.Jsoup
 import java.io.File
 
@@ -14,25 +13,10 @@ fun main(args: Array<String>) {
 
     kattisApi.login(Settings.user, Settings.token)
 
+    val newContest = kattisApi.createBlankContest()
+    println(newContest.csrfToken)
 
-
-    var file = File("responses/newContest.html")
-    Jsoup.parse(file, "UTF-8", "http://open.kattis.com")
-            .run {
-                var contestData = select("script")
-                        .single { it.toString().contains("Kattis.views.contest.edit.data") }
-
-                var contest = Contest.parse(contestData.toString())
-                println()
-//                        {
-//                    index, element ->
-//                    println("index: $index, element: $element")
-//                }
-            }
-
-    println("done")
-//    kattisApi.createNewContest("NewContestFromApp")
-//    var newContest = get("http://open.kattis.com/new-contest", cookies = repo.authCookies, headers = repo.headers)
+    //TODO: given csrf_token -> create a new contest using PUT http method
 
 //    File("responses/login.html").bufferedWriter().use {
 //        out -> out.write(loginResponse.text)
