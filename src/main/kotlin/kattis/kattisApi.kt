@@ -24,6 +24,7 @@ interface IKattisApi {
 
 class KattisApi(val kattisRepository: IKattisRepository) : IKattisApi {
     override fun createNewContest(name: String) {
+
     }
 
     override fun login(user: String, token: String) : String {

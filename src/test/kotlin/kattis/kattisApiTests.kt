@@ -11,7 +11,6 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
 internal class KattisApiTests {
-//    private lateinit var repoMock: IKattisRepository
     companion object {
         @BeforeAll fun setUp() {
         }
@@ -20,7 +19,7 @@ internal class KattisApiTests {
         }
     }
 
-    @Test fun login_validRepoResponse_returnsAuthCookie() {
+    @Test fun `login with valid response from repository should return auth cookie`() {
         // given
         val responseMock = mock<Response> {
             on { text } doReturn "Login successful!"
@@ -34,6 +33,6 @@ internal class KattisApiTests {
         val result = api.login("user", "token")
 
         // then
-        assertEquals(result, "Login successful!")
+        assertEquals("Login successful!", result)
     }
 }

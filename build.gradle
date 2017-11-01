@@ -5,6 +5,7 @@ buildscript {
     ext.junit_version = '5.0.0'
     ext.mockito_version = '1.5.0'
     ext.khttp_version = '0.1.0'
+    ext.jsoup_version = '1.10.3'
 
     repositories {
         mavenCentral()
@@ -30,6 +31,7 @@ repositories {
 dependencies {
     compile "com.github.jkcclemens:khttp:$khttp_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jsoup:jsoup:$jsoup_version"
     testCompile "com.nhaarman:mockito-kotlin-kt1.1:$mockito_version"
     testCompile "org.junit.jupiter:junit-jupiter-api:$junit_version"
     testCompile "org.junit.jupiter:junit-jupiter-params:$junit_version"
