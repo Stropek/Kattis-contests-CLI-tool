@@ -50,7 +50,7 @@ internal class KattisApiTests {
         """.trimMargin()
         val mockDocument = Jsoup.parse(html)
         val mockRepository = mock<IKattisRepository> {
-            on { getNewContestDocument() } doReturn mockDocument
+            on { getNewContestPage() } doReturn mockDocument
         }
         val api = KattisApi(mockRepository)
 
@@ -60,4 +60,59 @@ internal class KattisApiTests {
         // then
         assertEquals("1234567890", result.csrfToken)
     }
+    @Test fun `getRandomProblems(1) given valid document from kattis repository should return a list with a single problem`() {
+        // given
+        val html = """<tr>
+        |   <td><a href="/problems/problem_1">Some problem</a></td>
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+	    |   <td>1.0</td>
+        |   <td />
+        |   <td />
+        |</tr>
+        |<tr>
+        |   <td><a href="/problems/problem_2">Other problem</a></td>
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+	    |   <td>1.5</td>
+        |   <td />
+        |   <td />
+        |</tr>
+        |<tr>
+        |   <td><a href="/problems/problem_3">Another problem</a></td>
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+        |   <td />
+	    |   <td>2.0</td>
+        |   <td />
+        |   <td />
+        |</tr>""".trimMargin()
+        val mockDocument = Jsoup.parse(html)
+        val mockRepository = mock<IKattisRepository> {
+            on { getProblemsPage() } doReturn mockDocument
+        }
+        val api = KattisApi(mockRepository)
+
+        // when
+        val result = api.getRandomProblems(1)
+
+        // then
+        assertEquals(1, result.count())
+    }
+
+    //TODO: add a lot more test cases
 }

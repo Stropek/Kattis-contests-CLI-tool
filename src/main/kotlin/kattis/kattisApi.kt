@@ -15,6 +15,8 @@ package kattis
 //problemgroup_edit: "/problemgroups/{0}/edit"
 
 interface IKattisApi {
+    fun getRandomProblems(numberOfProblems: Int) : List<Problem>
+
     fun createContest(contest: Contest) : Boolean
 
     fun createBlankContest() : Contest
@@ -23,6 +25,18 @@ interface IKattisApi {
 }
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
+    override fun getRandomProblems(numberOfProblems: Int): List<Problem> {
+        val document = kattisRepository.getProblemsPage()
+        val rows = document.select("table.problem_list tbody tr")
+
+        for (row in rows) {
+            val cols = row.select("td")
+            println(cols[0].select("a").attr("href"))
+            println(cols[8].text())
+        }
+
+        return listOf()
+    }
 
     //TODO: add unit test
     override fun createContest(contest: Contest): Boolean {
@@ -36,7 +50,7 @@ class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
     }
 
     override fun createBlankContest() : Contest {
-        val document = kattisRepository.getNewContestDocument()
+        val document = kattisRepository.getNewContestPage()
 
         var contestData = document.select("script")
                 .single { it.toString().contains("Kattis.views.contest.edit.data") }

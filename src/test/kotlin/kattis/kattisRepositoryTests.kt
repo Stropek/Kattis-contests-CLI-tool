@@ -14,13 +14,22 @@ internal class KattisRepositoryTests {
             repository.createNewContest(contest)
         })
     }
-    @Test fun `getNewContestDocument() given user's not authenticated should throw UninitializedPropertyAccessException`() {
+    @Test fun `getProblemsPage() given user's not authenticated should throw UninitializedPropertyAccessException`() {
         assertThrows(UninitializedPropertyAccessException::class.java, {
             // given
             val repository = KattisRepository()
 
             // when
-            repository.getNewContestDocument()
+            repository.getProblemsPage()
+        })
+    }
+    @Test fun `getNewContestPage() given user's not authenticated should throw UninitializedPropertyAccessException`() {
+        assertThrows(UninitializedPropertyAccessException::class.java, {
+            // given
+            val repository = KattisRepository()
+
+            // when
+            repository.getNewContestPage()
         })
     }
 }
