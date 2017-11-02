@@ -3,8 +3,10 @@ package kattis
 import khttp.get
 import khttp.responses.Response
 import khttp.structures.cookie.CookieJar
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+
 import javax.naming.AuthenticationException
 
 interface IKattisRepository {
