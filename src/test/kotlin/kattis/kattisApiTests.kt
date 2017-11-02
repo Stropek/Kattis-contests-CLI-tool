@@ -10,17 +10,7 @@ import org.jsoup.Jsoup
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
-import org.jsoup.nodes.Document
-
 internal class KattisApiTests {
-    companion object {
-        @BeforeAll fun setUp() {
-        }
-
-        @AfterAll fun tearDown() {
-        }
-    }
-
     @Test fun `login() given valid response from kattis repository should return auth cookie`() {
         // given
         val mockResponse = mock<Response> {
@@ -68,6 +58,6 @@ internal class KattisApiTests {
         val result = api.createBlankContest()
 
         // then
-        assertEquals("\"1234567890\"", result.csrfToken)
+        assertEquals("1234567890", result.csrfToken)
     }
 }

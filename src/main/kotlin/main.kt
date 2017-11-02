@@ -1,9 +1,7 @@
 import configuration.*
-import kattis.Contest
 import kattis.KattisApi
 import kattis.KattisRepository
-import org.jsoup.Jsoup
-import java.io.File
+import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
     //TODO: add ability to run from a command line
@@ -14,9 +12,17 @@ fun main(args: Array<String>) {
     kattisApi.login(Settings.user, Settings.token)
 
     val newContest = kattisApi.createBlankContest()
-    println(newContest.csrfToken)
 
-    //TODO: given csrf_token -> create a new contest using PUT http method
+    newContest.name = "New Kattis Contest"
+    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
+    newContest.duration = 100
+
+    kattisApi.createContest(newContest)
+
+    println(newContest.shortName)
+
+    //TODO: get randomly some number of problems with various difficulty
+    // https://open.kattis.com/problems?show_solved=off&show_tried=off&show_untried=on
 
 //    File("responses/login.html").bufferedWriter().use {
 //        out -> out.write(loginResponse.text)

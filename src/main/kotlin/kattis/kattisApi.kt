@@ -15,14 +15,26 @@ package kattis
 //problemgroup_edit: "/problemgroups/{0}/edit"
 
 interface IKattisApi {
+    fun createContest(contest: Contest) : Boolean
+
     fun createBlankContest() : Contest
 
     fun login(user: String, toke: String) : String
 }
 
-class KattisApi(val kattisRepository: IKattisRepository) : IKattisApi {
+class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
 
-    // TODO: unit tests
+    //TODO: add unit test
+    override fun createContest(contest: Contest): Boolean {
+        val json = kattisRepository.createNewContest(contest)
+
+        contest.shortName = json.getJSONObject("response")
+                .getString("redirect")
+                .let { it.split("/")[2] }
+
+        return !contest.shortName.isNullOrBlank()
+    }
+
     override fun createBlankContest() : Contest {
         val document = kattisRepository.getNewContestDocument()
 

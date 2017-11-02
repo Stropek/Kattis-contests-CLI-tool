@@ -1,11 +1,11 @@
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
-    ext.junit_version = '5.0.0'
-    ext.mockito_version = '1.5.0'
     ext.khttp_version = '0.1.0'
+    ext.kotlin_version = '1.1.51'
     ext.jsoup_version = '1.10.3'
+    ext.mockito_version = '1.5.0'
+    ext.junit_version = '5.0.0'
 
     repositories {
         mavenCentral()

@@ -11,8 +11,12 @@ internal class ContestTests {
         // then
         assertEquals(false, result.isPrivileged)
         assertEquals(false, result.existing)
+        assertEquals(false, result.isOpen)
+        assertEquals("", result.name)
         assertEquals("", result.shortName)
         assertEquals("", result.csrfToken)
+        assertEquals("", result.startTime)
+        assertEquals(0, result.duration)
         assertEquals(mutableListOf<String>(), result.judges)
         assertEquals(mutableListOf<String>(), result.teams)
     }
@@ -56,7 +60,7 @@ internal class ContestTests {
         var result = Contest.parse(input)
 
         // then
-        assertEquals("test name", result.shortName)
+        assertEquals("test name", result.name)
     }
     @Test fun `parse when input contains valid 'csrf_token' value should return contest with given 'csrf_token' value`() {
         // given
@@ -70,6 +74,6 @@ internal class ContestTests {
         var result = Contest.parse(input)
 
         // then
-        assertEquals("\"1234567890\"", result.csrfToken)
+        assertEquals("1234567890", result.csrfToken)
     }
 }

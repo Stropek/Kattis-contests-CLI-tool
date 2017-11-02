@@ -1,15 +1,18 @@
 package kattis
 
 import khttp.get
+import khttp.put
 import khttp.responses.Response
 import khttp.structures.cookie.CookieJar
+
+import org.json.JSONObject
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-import javax.naming.AuthenticationException
-
 interface IKattisRepository {
+    fun createNewContest(contest: Contest) : JSONObject
+
     fun getNewContestDocument() : Document
 
     fun login(user: Map<String, String>) : Response
@@ -17,13 +20,16 @@ interface IKattisRepository {
 
 class KattisRepository : IKattisRepository {
     private val baseUrl = "http://open.kattis.com"
-    private val headers = mapOf("User-Agent" to "kattis-cli-submit")
+    private val headers = mapOf("User-Agent" to "kattis-cli-submit", "Content-Type" to "application/json")
 
     lateinit var authCookies: CookieJar
 
-    override fun getNewContestDocument(): Document {
-        ensureAuthentication()
+    override fun createNewContest(contest: Contest): JSONObject {
+        val response = put("$baseUrl/ajax/session", cookies = authCookies, headers = headers, json = contest.toData())
+        return response.jsonObject
+    }
 
+    override fun getNewContestDocument(): Document {
         return Jsoup.connect("$baseUrl/new-contest")
                 .cookies(authCookies)
                 .headers(headers)
@@ -31,13 +37,8 @@ class KattisRepository : IKattisRepository {
     }
 
     override fun login(loginArgs: Map<String, String>): Response {
-        var response = get("$baseUrl/login", data = loginArgs, headers = headers)
+        val response = get("$baseUrl/login", data = loginArgs, headers = headers)
         authCookies = response.cookies
         return response
-    }
-
-    private fun ensureAuthentication() {
-        if (authCookies == null)
-            throw AuthenticationException("You need to log in first!")
     }
 }
