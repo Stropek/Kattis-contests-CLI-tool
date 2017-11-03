@@ -62,45 +62,49 @@ internal class KattisApiTests {
     }
     @Test fun `getRandomProblems(1) given valid document from kattis repository should return a list with a single problem`() {
         // given
-        val html = """<tr>
-        |   <td><a href="/problems/problem_1">Some problem</a></td>
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-	    |   <td>1.0</td>
-        |   <td />
-        |   <td />
-        |</tr>
-        |<tr>
-        |   <td><a href="/problems/problem_2">Other problem</a></td>
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-	    |   <td>1.5</td>
-        |   <td />
-        |   <td />
-        |</tr>
-        |<tr>
-        |   <td><a href="/problems/problem_3">Another problem</a></td>
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-        |   <td />
-	    |   <td>2.0</td>
-        |   <td />
-        |   <td />
-        |</tr>""".trimMargin()
+        val html = """<table class="problem_list">
+            |<tbody>
+            |<tr>
+            |   <td><a href="/problems/problem_1">Some problem</a></td>
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td>1.0</td>
+            |   <td />
+            |   <td />
+            |</tr>
+            |<tr>
+            |   <td><a href="/problems/problem_2">Other problem</a></td>
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td>1.5</td>
+            |   <td />
+            |   <td />
+            |</tr>
+            |<tr>
+            |   <td><a href="/problems/problem_3">Another problem</a></td>
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td />
+            |   <td>2.0</td>
+            |   <td />
+            |   <td />
+            |</tr>
+            |</tbody>
+            |</table>""".trimMargin()
         val mockDocument = Jsoup.parse(html)
         val mockRepository = mock<IKattisRepository> {
             on { getProblemsPage() } doReturn mockDocument

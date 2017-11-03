@@ -1,5 +1,7 @@
 package kattis
 
+import java.util.*
+
 //ajax_session_edit: "/ajax/session",
 //ajax_session_banner: "/ajax/session/banner",
 //ajax_session_judge: "/ajax/session/judge",
@@ -26,16 +28,23 @@ interface IKattisApi {
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
     override fun getRandomProblems(numberOfProblems: Int): List<Problem> {
+        // TODO: add minimum difficulty
+        var selectedNumbers = setOf<Int>()
+        var selectedProblems = mutableListOf<Problem>()
+        var random = Random()
         val document = kattisRepository.getProblemsPage()
         val rows = document.select("table.problem_list tbody tr")
 
-        for (row in rows) {
-            val cols = row.select("td")
-            println(cols[0].select("a").attr("href"))
-            println(cols[8].text())
+        while (selectedNumbers.size < numberOfProblems) {
+            val selectedNumber = random.nextInt(rows.size)
+            if (selectedNumber in selectedNumbers)
+                continue
+
+            selectedNumbers = selectedNumbers.plus(selectedNumber)
+            selectedProblems.add(Problem.parseRow(rows[selectedNumber]))
         }
 
-        return listOf()
+        return selectedProblems
     }
 
     //TODO: add unit test

@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
 //    kattisApi.createContest(newContest)
 //    println(newContest.shortName)
 
-    val problems = api.getRandomProblems(1)
+    val problems = api.getRandomProblems(10)
 
     for (problem in problems) {
         println("${problem.name}: ${problem.difficulty}")
