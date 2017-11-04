@@ -11,7 +11,6 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-//TODO: break down to problems repo and contest repo
 interface IKattisRepository {
     fun addProblemToContest(newContest: Contest, problem: Problem)
 

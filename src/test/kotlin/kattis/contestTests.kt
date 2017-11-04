@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class ContestTests {
     @Test fun `primary constructor should set default values`() {
-        // given
+        // when
         val result = Contest()
 
         // then

@@ -15,6 +15,7 @@ interface IKattisApi {
 }
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
+    // TODO: unit test?
     override fun addProblemsToContest(newContest: Contest, problems: List<Problem>) {
         for (problem in problems) {
             kattisRepository.addProblemToContest(newContest, problem)

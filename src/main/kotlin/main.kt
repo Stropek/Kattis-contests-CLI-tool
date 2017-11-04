@@ -1,7 +1,6 @@
 import configuration.*
 import kattis.KattisApi
 import kattis.KattisRepository
-import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
     //TODO: add ability to run from a command line
@@ -9,7 +8,10 @@ fun main(args: Array<String>) {
     val repo = KattisRepository()
     val api = KattisApi(repo)
 
-    api.login(Settings.user, Settings.token)
+    val reader = FileReader()
+    val settings = Settings(reader)
+
+    api.login(settings.user, settings.token)
 
 //    val teams = // TODO: read teams from a file and add them to contest
 

@@ -1,31 +1,33 @@
 package configuration
 
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
-
 class Settings {
-    companion object {
+    var user: String
+    var token: String
+
+    constructor(user: String, token: String) {
+        this.user = user
+        this.token = token
+    }
+
+    constructor(fileReader: IFileReader) {
         val dictionary = hashMapOf<String, Any>()
 
-        init {
-            val homePath = System.getenv("HOME")
+        val lines = fileReader.readKattisConfiguration()
 
-            // TODO: add check if home path exists - if not, use current path
-            val lines = Files.readAllLines(Paths.get(homePath, ".kattis"), StandardCharsets.UTF_8)
-
-            lines.map { it.trim() }
-                    // filter empty lines
-                    .filterNot { it.isEmpty() }
-                    // filter comments
-                    .filterNot { it.startsWith("#") }
-                    // create list of key-value pairs
-                    .map { it.split(":").let {
+        lines.map { it.trim() }
+                // filter empty lines
+                .filterNot { it.isEmpty() }
+                // filter comments
+                .filterNot { it.startsWith("#") }
+                // create list of key-value pairs
+                .map {
+                    it.split(":").let {
                         dictionary.put(it[0].trim(), it[1].trim())
-                    } }
-        }
+                    }
+                }
 
-        val user = dictionary["username"].toString()
-        val token = dictionary["token"].toString()
+        user = dictionary["username"].toString()
+        token = dictionary["token"].toString()
     }
 }
+
