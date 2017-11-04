@@ -5,31 +5,87 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 
 import khttp.responses.Response
+import org.json.JSONObject
+
 import org.jsoup.Jsoup
 
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
 internal class KattisApiTests {
-    @Test fun `login() given valid response from kattis repository should return auth cookie`() {
+    @Test fun `getRandomProblems(1) - html with problems - return a list with 1 problem`() {
         // given
-        val mockResponse = mock<Response> {
-            on { text } doReturn "Login successful!"
-        }
+        val mockHtml = ProblemsListHtml.Builder().withProblems(5).build()
         val mockRepository = mock<IKattisRepository> {
-            on { login(any()) } doReturn mockResponse
+            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml)
         }
         val api = KattisApi(mockRepository)
 
         // when
-        val result = api.login("user", "token")
+        val result = api.getRandomProblems(1)
 
         // then
-        assertEquals("Login successful!", result)
+        assertEquals(1, result.size)
     }
-    @Test fun `createBlankContest() given valid document from kattis repository should return new contest object`() {
+    @Test fun `getRandomProblems(2) - 2 html pages with problems - returns a list with 2 problems`() {
         // given
-        val html = """
+        var mockHtml_1 = ProblemsListHtml.Builder().withProblems(5, 2.0).build()
+        var mockHtml_2 = ProblemsListHtml.Builder().withProblems(5, 3.0).build()
+        val mockRepository = mock<IKattisRepository> {
+            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml_1)
+            on { getProblemsPage(1) } doReturn Jsoup.parse(mockHtml_2)
+        }
+        val api = KattisApi(mockRepository)
+
+        // when
+        val result = api.getRandomProblems(2)
+
+        // then
+        assertEquals(2, result.size)
+    }
+    @Test fun `getRandomProblems(1, 3d) - 3 html pages - 3rd one has minimum difficulty level - returns a list with 1 problem from 3rd page`() {
+        // given
+        var mockHtml_1 = ProblemsListHtml.Builder().withProblems(5, 1.0).build()
+        var mockHtml_2 = ProblemsListHtml.Builder().withProblems(5, 2.0).build()
+        var mockHtml_3 = ProblemsListHtml.Builder().withProblems(5, 3.0).build()
+        val mockRepository = mock<IKattisRepository> {
+            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml_1)
+            on { getProblemsPage(1) } doReturn Jsoup.parse(mockHtml_2)
+            on { getProblemsPage(2) } doReturn Jsoup.parse(mockHtml_3)
+        }
+        val api = KattisApi(mockRepository)
+
+        // when
+        val result = api.getRandomProblems(1, 3.0)
+
+        // then
+        assertEquals(1, result.size)
+        assertEquals(3.0, result.first().difficulty)
+    }
+    @Test fun `createContest() - JSONObject with redirect URL - modifies contest's short name`() {
+        // when
+        val json = """{
+            |   "success": true,
+            |   "response": {
+            |       "redirect": "/problems/after"
+            |   }
+            |}""".trimMargin()
+        val mockRepository = mock<IKattisRepository> {
+            on { createNewContest(any()) } doReturn JSONObject(json)
+        }
+        val contest = Contest()
+        contest.shortName = "before"
+        val api = KattisApi(mockRepository)
+
+        // when
+        api.createContest(contest)
+
+        // then
+        assertEquals("after", contest.shortName)
+    }
+    @Test fun `createBlankContest() - html with contest data - returns new contest object`() {
+        // given
+        val mockHtml = """
             |<html>
             |  <head></head>
             |  <body>
@@ -48,9 +104,8 @@ internal class KattisApiTests {
             |  </body>
             |</html>
         """.trimMargin()
-        val mockDocument = Jsoup.parse(html)
         val mockRepository = mock<IKattisRepository> {
-            on { getNewContestPage() } doReturn mockDocument
+            on { getNewContestPage() } doReturn Jsoup.parse(mockHtml)
         }
         val api = KattisApi(mockRepository)
 
@@ -60,63 +115,65 @@ internal class KattisApiTests {
         // then
         assertEquals("1234567890", result.csrfToken)
     }
-    @Test fun `getRandomProblems(1) given valid document from kattis repository should return a list with a single problem`() {
+    @Test fun `login() - valid response from repo - returns successful login message`() {
         // given
-        val html = """<table class="problem_list">
-            |<tbody>
-            |<tr>
-            |   <td><a href="/problems/problem_1">Some problem</a></td>
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td>1.0</td>
-            |   <td />
-            |   <td />
-            |</tr>
-            |<tr>
-            |   <td><a href="/problems/problem_2">Other problem</a></td>
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td>1.5</td>
-            |   <td />
-            |   <td />
-            |</tr>
-            |<tr>
-            |   <td><a href="/problems/problem_3">Another problem</a></td>
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td />
-            |   <td>2.0</td>
-            |   <td />
-            |   <td />
-            |</tr>
-            |</tbody>
-            |</table>""".trimMargin()
-        val mockDocument = Jsoup.parse(html)
+        val mockResponse = mock<Response> {
+            on { text } doReturn "Login successful!"
+        }
         val mockRepository = mock<IKattisRepository> {
-            on { getProblemsPage() } doReturn mockDocument
+            on { login(any()) } doReturn mockResponse
         }
         val api = KattisApi(mockRepository)
 
         // when
-        val result = api.getRandomProblems(1)
+        val result = api.login("user", "token")
 
         // then
-        assertEquals(1, result.count())
+        assertEquals("Login successful!", result)
     }
-
-    //TODO: add a lot more test cases
 }
+
+class ProblemsListHtml {
+    class Builder {
+        private var problems: MutableList<String> = mutableListOf()
+
+        fun build(): String {
+            return """<html>
+                |   <table class="problem_list">
+                |       <tbody>
+                |           ${problems.joinToString()}
+                |       </tbody>
+                |   </table>
+                |</html>""".trimMargin()
+        }
+
+        fun withProblem(name: String): ProblemsListHtml.Builder {
+            problems.add(getProblemRow(name))
+            return this
+        }
+
+        fun withProblems(number: Int, difficulty: Double? = null): ProblemsListHtml.Builder {
+            for (it in 0..number) {
+                problems.add(getProblemRow("Problem_$it", difficulty ?: it.toDouble()))
+            }
+            return this;
+        }
+
+        private fun getProblemRow(name: String, difficulty: Double? = 2.5): String {
+            return """<tr>
+                |   <td><a href="/problems/$name">display name</a></td>
+                |   <td />
+                |   <td />
+                |   <td />
+                |   <td />
+                |   <td />
+                |   <td />
+                |   <td />
+                |   <td>$difficulty</td>
+                |   <td />
+                |   <td />
+                </tr>""".trimMargin()
+        }
+    }
+}
+

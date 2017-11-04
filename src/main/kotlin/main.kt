@@ -19,14 +19,7 @@ fun main(args: Array<String>) {
 //    kattisApi.createContest(newContest)
 //    println(newContest.shortName)
 
-    val problems = api.getRandomProblems(10)
-
-    for (problem in problems) {
-        println("${problem.name}: ${problem.difficulty}")
-    }
-
-    //TODO: get randomly some number of problems with various difficulty
-    // https://open.kattis.com/problems?show_solved=off&show_tried=off&show_untried=on
+    val problems = api.getRandomProblems(10, 3.0)
 
 //    File("responses/problems.html").bufferedWriter().use {
 //        out -> out.write(problems.text)

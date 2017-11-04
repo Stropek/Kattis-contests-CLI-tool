@@ -17,9 +17,9 @@ import java.util.*
 //problemgroup_edit: "/problemgroups/{0}/edit"
 
 interface IKattisApi {
-    fun getRandomProblems(numberOfProblems: Int) : List<Problem>
+    fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0) : List<Problem>
 
-    fun createContest(contest: Contest) : Boolean
+    fun createContest(contest: Contest)
 
     fun createBlankContest() : Contest
 
@@ -27,35 +27,41 @@ interface IKattisApi {
 }
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
-    override fun getRandomProblems(numberOfProblems: Int): List<Problem> {
-        // TODO: add minimum difficulty
+    override fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double): List<Problem> {
         var selectedNumbers = setOf<Int>()
         var selectedProblems = mutableListOf<Problem>()
         var random = Random()
-        val document = kattisRepository.getProblemsPage()
-        val rows = document.select("table.problem_list tbody tr")
+        var pageNo = -1
 
-        while (selectedNumbers.size < numberOfProblems) {
-            val selectedNumber = random.nextInt(rows.size)
-            if (selectedNumber in selectedNumbers)
+        do {
+            pageNo++
+            val document = kattisRepository.getProblemsPage(pageNo)
+            // println("getProblems($pageNo)")
+            val rows = document.select("table.problem_list tbody tr")
+            val firstProblem = Problem.parseRow(rows[0])
+            if (firstProblem.difficulty < minDifficulty) {
+                println("Problems on page #$pageNo are too easy - moving to the next one...")
                 continue
+            }
 
+            val selectedNumber = random.nextInt(rows.size)
             selectedNumbers = selectedNumbers.plus(selectedNumber)
-            selectedProblems.add(Problem.parseRow(rows[selectedNumber]))
-        }
+
+            val selectedProblem = Problem.parseRow(rows[selectedNumber])
+            selectedProblems.add(selectedProblem)
+
+            println("Selected problem #$selectedNumber -> ${selectedProblem.name}")
+        } while (rows.size > 0 && selectedNumbers.size < numberOfProblems)
 
         return selectedProblems
     }
 
-    //TODO: add unit test
-    override fun createContest(contest: Contest): Boolean {
+    override fun createContest(contest: Contest) {
         val json = kattisRepository.createNewContest(contest)
 
         contest.shortName = json.getJSONObject("response")
                 .getString("redirect")
                 .let { it.split("/")[2] }
-
-        return !contest.shortName.isNullOrBlank()
     }
 
     override fun createBlankContest() : Contest {
