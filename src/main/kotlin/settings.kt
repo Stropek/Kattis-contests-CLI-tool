@@ -1,4 +1,6 @@
-package configuration
+package settings
+
+import interfaces.IFileReader
 
 class Settings {
     var user: String

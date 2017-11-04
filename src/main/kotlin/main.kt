@@ -1,22 +1,24 @@
-import configuration.*
+import kattis.Command
 import kattis.KattisApi
 import kattis.KattisRepository
 
+import settings.Settings
+
 fun main(args: Array<String>) {
-    //TODO: add ability to run from a command line
+    // TODO: add ability to run from a command line
+    // TODO: move settings functionality to command
+    val reader = FileReader()
+    // TODO: if command line arguments for user and token are passed - use the other constructor for Settings
+    val settings = Settings(reader)
+    val command = Command(args, reader)
 
     val repo = KattisRepository()
     val api = KattisApi(repo)
 
-    val reader = FileReader()
-    val settings = Settings(reader)
 
     api.login(settings.user, settings.token)
 
-//    val teams = // TODO: read teams from a file and add them to contest
-
 //    val problems = api.getRandomProblems(10, 3.0)
-//
 //    val newContest = api.createBlankContest()
 //
 //    newContest.name = "Kattis with problems"

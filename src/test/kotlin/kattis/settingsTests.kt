@@ -3,13 +3,13 @@ package kattis
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 
-import configuration.IFileReader
-import configuration.Settings
+import interfaces.IFileReader
+import settings.Settings
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class SettingsTests {
+class SettingsTests {
     @Test fun `constructor(name, token) - sets values of name and token`() {
         // when
         val settings = Settings("max", "1234567890")

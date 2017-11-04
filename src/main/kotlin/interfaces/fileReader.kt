@@ -1,5 +1,7 @@
-package configuration
+package interfaces
 
 interface IFileReader {
-    fun readKattisConfiguration() : MutableList<String>
+    fun read(path: String): MutableList<String>
+
+    fun readKattisConfiguration(): MutableList<String>
 }
