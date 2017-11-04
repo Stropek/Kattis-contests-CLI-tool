@@ -15,6 +15,7 @@ class Contest {
 
     fun toData(): Map<String, Any> {
         return mapOf("session_name" to this.name,
+                "short_name" to this.shortName,
                 "start_time" to this.startTime,
                 "duration" to "${this.duration}:00",
                 "is_open" to false,

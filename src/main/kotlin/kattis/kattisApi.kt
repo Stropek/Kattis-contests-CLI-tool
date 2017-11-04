@@ -2,21 +2,9 @@ package kattis
 
 import java.util.*
 
-//ajax_session_edit: "/ajax/session",
-//ajax_session_banner: "/ajax/session/banner",
-//ajax_session_judge: "/ajax/session/judge",
-//ajax_session_problem: "/ajax/session/problem",
-//ajax_session_team: "/ajax/session/team",
-//ajax_session_team_member: "/ajax/session/team/member",
-//ajax_session_short_name_available: "/ajax/session/short-name-available",
-//ajax_session_publish: "/ajax/session/publish",
-//ajax_author: "/ajax/author",
-//ajax_course_offering_teacher: "/ajax/course_offering/teacher",
-//ajax_course_offering_short_name_available: "/ajax/course_offering/short-name-available",
-//user_view: "/users",
-//problemgroup_edit: "/problemgroups/{0}/edit"
-
 interface IKattisApi {
+    fun addProblemsToContest(newContest: Contest, problems: List<Problem>)
+
     fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0) : List<Problem>
 
     fun createContest(contest: Contest)
@@ -27,6 +15,12 @@ interface IKattisApi {
 }
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
+    override fun addProblemsToContest(newContest: Contest, problems: List<Problem>) {
+        for (problem in problems) {
+            kattisRepository.addProblemToContest(newContest, problem)
+        }
+    }
+
     override fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double): List<Problem> {
         var selectedNumbers = setOf<Int>()
         var selectedProblems = mutableListOf<Problem>()

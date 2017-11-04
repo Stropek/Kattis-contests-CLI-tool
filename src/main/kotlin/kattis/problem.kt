@@ -13,4 +13,8 @@ data class Problem(val name: String, val difficulty: Double) {
             return Problem(name, difficulty)
         }
     }
+
+    fun toData(): Map<String, Any> {
+        return mapOf("problem_name" to this.name)
+    }
 }

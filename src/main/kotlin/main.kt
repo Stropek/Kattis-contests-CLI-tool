@@ -1,6 +1,7 @@
 import configuration.*
 import kattis.KattisApi
 import kattis.KattisRepository
+import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
     //TODO: add ability to run from a command line
@@ -10,16 +11,21 @@ fun main(args: Array<String>) {
 
     api.login(Settings.user, Settings.token)
 
-//    val newContest = kattisApi.createBlankContest()
+//    val teams = // TODO: read teams from a file and add them to contest
+
+//    val problems = api.getRandomProblems(10, 3.0)
 //
-//    newContest.name = "New Kattis Contest"
+//    val newContest = api.createBlankContest()
+//
+//    newContest.name = "Kattis with problems"
 //    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
 //    newContest.duration = 100
 //
-//    kattisApi.createContest(newContest)
+//    api.createContest(newContest)
 //    println(newContest.shortName)
+//
+//    api.addProblemsToContest(newContest, problems)
 
-    val problems = api.getRandomProblems(10, 3.0)
 
 //    File("responses/problems.html").bufferedWriter().use {
 //        out -> out.write(problems.text)

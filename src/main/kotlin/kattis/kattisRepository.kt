@@ -1,6 +1,7 @@
 package kattis
 
 import khttp.get
+import khttp.post
 import khttp.put
 import khttp.responses.Response
 import khttp.structures.cookie.CookieJar
@@ -10,7 +11,10 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
+//TODO: break down to problems repo and contest repo
 interface IKattisRepository {
+    fun addProblemToContest(newContest: Contest, problem: Problem)
+
     fun getProblemsPage(page: Int = 0, order: String = "problem_difficulty",
                         showUntried: Boolean = true, showTried: Boolean = false,
                         showSolved: Boolean = false): Document
@@ -27,6 +31,16 @@ class KattisRepository : IKattisRepository {
     private val headers = mapOf("User-Agent" to "kattis-cli-submit", "Content-Type" to "application/json")
 
     lateinit var authCookies: CookieJar
+
+    override fun addProblemToContest(contest: Contest, problem: Problem) {
+        val json = contest.toData() + problem.toData()
+
+        // TODO: handle not found problems
+        post("$baseUrl/ajax/session/problem",
+                cookies = authCookies,
+                headers = headers,
+                json = json)
+    }
 
     override fun getProblemsPage(page: Int, order: String, showUntried: Boolean, showTried: Boolean, showSolved: Boolean): Document {
         val params = mapOf("page" to page.toString(), "order" to order,
