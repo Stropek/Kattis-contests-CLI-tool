@@ -12,7 +12,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 interface IKattisRepository {
-    fun addProblemToContest(newContest: Contest, problem: Problem)
+    fun addTeamToContest(contest: Contest, teams: Team)
+
+    fun addProblemToContest(contest: Contest, problem: Problem)
 
     fun getProblemsPage(page: Int = 0, order: String = "problem_difficulty",
                         showUntried: Boolean = true, showTried: Boolean = false,
@@ -30,6 +32,12 @@ class KattisRepository : IKattisRepository {
     private val headers = mapOf("User-Agent" to "kattis-cli-submit", "Content-Type" to "application/json")
 
     lateinit var authCookies: CookieJar
+
+    override fun addTeamToContest(contest: Contest, team: Team) {
+        // TODO:
+        //  - add team to contest -> get team ID
+        //  - add all members from a given team to it using received team ID
+    }
 
     override fun addProblemToContest(contest: Contest, problem: Problem) {
         val json = contest.toData() + problem.toData()

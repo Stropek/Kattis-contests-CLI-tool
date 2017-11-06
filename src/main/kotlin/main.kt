@@ -2,6 +2,8 @@ import kattis.Command
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.ShowHelpException
+import kattis.KattisApi
+import kattis.KattisRepository
 
 import java.io.StringWriter
 
@@ -25,10 +27,14 @@ fun run(args: KattisCliArgs) {
     val reader = FileReader()
     val command = Command(args, reader)
 
-//    val repo = KattisRepository()
-//    val api = KattisApi(repo)
+    val repo = KattisRepository()
+    val api = KattisApi(repo)
 
-//    api.login(settings.user, settings.token)
+    api.login(command.credentials.user, command.credentials.token)
+
+    val newContest = api.createBlankContest()
+    // add teams to contest
+    api.addTeamsToContest(newContest, command.teams)
 
 //    val problems = api.getRandomProblems(10, 3.0)
 //    val newContest = api.createBlankContest()
@@ -41,7 +47,6 @@ fun run(args: KattisCliArgs) {
 //    println(newContest.shortName)
 //
 //    api.addProblemsToContest(newContest, problems)
-
 
 //    File("responses/problems.html").bufferedWriter().use {
 //        out -> out.write(problems.text)

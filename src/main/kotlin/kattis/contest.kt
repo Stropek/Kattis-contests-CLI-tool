@@ -1,9 +1,8 @@
 package kattis
 
-class Contest {
+class Contest(var name: String = "") {
     var isPrivileged: Boolean = false
     var existing: Boolean = false
-    var name: String = ""
     var shortName: String = ""
     var csrfToken: String = ""
     var judges: MutableList<String> = mutableListOf()

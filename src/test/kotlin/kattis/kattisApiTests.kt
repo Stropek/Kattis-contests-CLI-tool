@@ -11,9 +11,40 @@ import org.jsoup.Jsoup
 
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
+import org.mockito.Mockito
 
 internal class KattisApiTests {
-    @Test fun `getRandomProblems(1) - html with problems - return a list with 1 problem`() {
+    @Test fun `addTeamsToContest - list of teams - calls addTeamToContest for each team`() {
+        // given
+        val contest = Contest("contest_1")
+        val teams = listOf(Team("t1"), Team("t2"))
+        val mockRepository = mock<IKattisRepository>()
+        val api = KattisApi(mockRepository)
+
+        // when
+        api.addTeamsToContest(contest, teams)
+
+        // then
+        for (team in teams) {
+            Mockito.verify(mockRepository).addTeamToContest(contest, team)
+        }
+    }
+    @Test fun `addProblemsToContest - list of problems - calls addProblemToContest for each problem`() {
+        // given
+        val contest = Contest("contest_1")
+        val problems = listOf(Problem("p1", 1.0), Problem("p2", 2.5))
+        val mockRepository = mock<IKattisRepository>()
+        val api = KattisApi(mockRepository)
+
+        // when
+        api.addProblemsToContest(contest, problems)
+
+        // then
+        for (problem in problems) {
+            Mockito.verify(mockRepository).addProblemToContest(contest, problem)
+        }
+    }
+    @Test fun `getRandomProblems(1) - html with problems - returns a list with 1 problem`() {
         // given
         val mockHtml = ProblemsListHtml.Builder().withProblems(5).build()
         val mockRepository = mock<IKattisRepository> {
@@ -156,7 +187,7 @@ class ProblemsListHtml {
             for (it in 0..number) {
                 problems.add(getProblemRow("Problem_$it", difficulty ?: it.toDouble()))
             }
-            return this;
+            return this
         }
 
         private fun getProblemRow(name: String, difficulty: Double? = 2.5): String {

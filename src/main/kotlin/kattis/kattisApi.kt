@@ -2,8 +2,12 @@ package kattis
 
 import java.util.*
 
+// TODO: remove all functions that aren't needed at top level
+// TODO: but keep unit tests
 interface IKattisApi {
-    fun addProblemsToContest(newContest: Contest, problems: List<Problem>)
+    fun addTeamsToContest(contest: Contest, teams: List<Team>)
+
+    fun addProblemsToContest(contest: Contest, problems: List<Problem>)
 
     fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0) : List<Problem>
 
@@ -15,10 +19,15 @@ interface IKattisApi {
 }
 
 class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
-    // TODO: unit test?
-    override fun addProblemsToContest(newContest: Contest, problems: List<Problem>) {
+    override fun addTeamsToContest(contest: Contest, teams: List<Team>) {
+        for (team in teams) {
+            kattisRepository.addTeamToContest(contest, team)
+        }
+    }
+
+    override fun addProblemsToContest(contest: Contest, problems: List<Problem>) {
         for (problem in problems) {
-            kattisRepository.addProblemToContest(newContest, problem)
+            kattisRepository.addProblemToContest(contest, problem)
         }
     }
 
