@@ -1,9 +1,10 @@
 package kattis
 
 import interfaces.IFileReader
+import settings.KattisCliArgs
 
 // TODO: move settings code to command
-class Command(val args: Array<String>, val reader: IFileReader) {
+class Command(val args: KattisCliArgs, val reader: IFileReader) {
 //    var credentials: Credentials
 //    var teams: MutableList<Team>
 

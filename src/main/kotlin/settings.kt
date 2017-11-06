@@ -1,6 +1,13 @@
 package settings
 
+import com.xenomachina.argparser.ArgParser
+
 import interfaces.IFileReader
+
+class KattisCliArgs(parser: ArgParser) {
+    // TODO: add argument for verbose logging: https://github.com/MicroUtils/kotlin-logging
+    val test by parser.flagging("-t", "--test", help = "test flag")
+}
 
 class Settings {
     var user: String
