@@ -14,13 +14,4 @@ class FileReader : IFileReader {
 
         throw FileNotFoundException(path)
     }
-
-    override fun readKattisConfiguration(): MutableList<String> {
-        // TODO: add check if home path exists
-        //   - if not, use current path to look for .kattis file
-        //   - if no .kattis file is found -throw an exception
-        val homePath = System.getenv("HOME")
-
-        return Files.readAllLines(Paths.get(homePath, ".kattis"), StandardCharsets.UTF_8)
-    }
 }

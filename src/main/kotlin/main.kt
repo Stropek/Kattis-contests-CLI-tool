@@ -1,9 +1,4 @@
 import kattis.Command
-import kattis.KattisApi
-import kattis.KattisRepository
-import settings.KattisCliArgs
-
-import settings.Settings
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.ShowHelpException
@@ -27,16 +22,11 @@ fun main(args: Array<String>) {
 }
 
 fun run(args: KattisCliArgs) {
-    println(args.test)
-    // TODO: move settings functionality to command
     val reader = FileReader()
-    // TODO: if command line arguments for user and token are passed - use the other constructor for Settings
-    val settings = Settings(reader)
     val command = Command(args, reader)
 
 //    val repo = KattisRepository()
 //    val api = KattisApi(repo)
-
 
 //    api.login(settings.user, settings.token)
 
