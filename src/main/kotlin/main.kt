@@ -8,6 +8,7 @@ import kattis.KattisRepository
 import java.io.StringWriter
 
 import java.lang.System.err
+import java.time.LocalDateTime
 
 val APP_NAME = "Kattis Competition CLI"
 
@@ -30,11 +31,16 @@ fun run(args: KattisCliArgs) {
     val repo = KattisRepository()
     val api = KattisApi(repo)
 
-    api.login(command.credentials.user, command.credentials.token)
+//    api.login(command.credentials.user, command.credentials.token)
 
-    val newContest = api.createBlankContest()
+//    val newContest = api.createBlankContest()
+//    newContest.name = "Teams from a file 2"
+//    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
+//    newContest.duration = 100
+//    api.createContest(newContest)
+
     // add teams to contest
-    api.addTeamsToContest(newContest, command.teams)
+//    api.addTeamsToContest(newContest, command.teams)
 
 //    val problems = api.getRandomProblems(10, 3.0)
 //    val newContest = api.createBlankContest()
@@ -43,7 +49,6 @@ fun run(args: KattisCliArgs) {
 //    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
 //    newContest.duration = 100
 //
-//    api.createContest(newContest)
 //    println(newContest.shortName)
 //
 //    api.addProblemsToContest(newContest, problems)

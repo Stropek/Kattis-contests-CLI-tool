@@ -1,6 +1,5 @@
 package kattis.models
 
-import kattis.models.Problem
 import org.jsoup.Jsoup
 
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -33,5 +32,15 @@ internal class ProblemTests {
         // then
         assertEquals("problem_1", result.name)
         assertEquals(1.0, result.difficulty)
+    }
+    @Test fun `toData() - returns map of problem's properties`() {
+        // given
+        val problem = Problem("p_1", 2.0)
+
+        // when
+        val result = problem.toData()
+
+        // then
+        assertEquals("p_1", result["problem_name"])
     }
 }

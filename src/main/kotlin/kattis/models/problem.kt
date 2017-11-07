@@ -3,6 +3,10 @@ package kattis.models
 import org.jsoup.nodes.Element
 
 data class Problem(val name: String, val difficulty: Double) {
+    fun toData(): Map<String, Any> {
+        return mapOf("problem_name" to this.name)
+    }
+
     companion object {
         fun parseRow(row: Element) : Problem {
             val cols = row.select("td")
@@ -12,9 +16,5 @@ data class Problem(val name: String, val difficulty: Double) {
 
             return Problem(name, difficulty)
         }
-    }
-
-    fun toData(): Map<String, Any> {
-        return mapOf("problem_name" to this.name)
     }
 }

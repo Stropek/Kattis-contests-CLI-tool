@@ -4,6 +4,7 @@ import kattis.models.Contest
 import kattis.models.Problem
 import kattis.models.Team
 import khttp.get
+import khttp.head
 import khttp.post
 import khttp.put
 import khttp.responses.Response
@@ -37,15 +38,34 @@ class KattisRepository : IKattisRepository {
     lateinit var authCookies: CookieJar
 
     override fun addTeamToContest(contest: Contest, team: Team) {
-        // TODO:
-        //  - add team to contest -> get team ID
-        //  - add all members from a given team to it using received team ID
+        val teamJson = contest.toData() + team.toData()
+        val teamResponse = post("$baseUrl/ajax/session/team",
+                cookies = authCookies,
+                headers = headers,
+                json = teamJson)
+
+        println("Added team '${team.name}' to '${contest.name}' contest - status code: ${teamResponse.statusCode}")
+
+        team.id = teamResponse.jsonObject
+                .getJSONObject("response")
+                .getJSONObject("team")
+                .getString("team_id")
+
+        for (member in team.members) {
+            val memberJson = contest.toData() + team.toData() + mapOf("username" to member.trim(), "accepted" to false)
+            val memberResponse = post("$baseUrl/ajax/session/team/member",
+                    cookies = authCookies,
+                    headers = headers,
+                    json = memberJson)
+
+            println("Added '$member' to '${team.name}' - status code: ${memberResponse.statusCode}")
+        }
     }
 
     override fun addProblemToContest(contest: Contest, problem: Problem) {
         val json = contest.toData() + problem.toData()
 
-        // TODO: handle not found problems
+        // TODO: handle case when problem is not found
         post("$baseUrl/ajax/session/problem",
                 cookies = authCookies,
                 headers = headers,

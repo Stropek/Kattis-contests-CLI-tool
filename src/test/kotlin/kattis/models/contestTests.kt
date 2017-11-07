@@ -76,4 +76,24 @@ internal class ContestTests {
         // then
         assertEquals("1234567890", result.csrfToken)
     }
+    @Test fun `toData() - returns map of contest's properties`() {
+        // given
+        val contest = Contest("c_1")
+        contest.shortName = "sn"
+        contest.startTime = "123"
+        contest.duration = 10
+        contest.isOpen = true
+        contest.csrfToken = "890"
+
+        // when
+        val result = contest.toData()
+
+        // then
+        assertEquals("c_1", result["session_name"])
+        assertEquals("sn", result["short_name"])
+        assertEquals("123", result["start_time"])
+        assertEquals("10:00", result["duration"])
+        assertEquals(false, result["is_open"])
+        assertEquals("890", result["csrf_token"])
+    }
 }
