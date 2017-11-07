@@ -1,38 +1,37 @@
 package kattis
 
-import interfaces.IFileReader
 import KattisCliArgs
+import interfaces.IFileReader
+import kattis.models.Team
 
 class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var credentials: Credentials
-    var teams: MutableList<Team>
+    var teams: List<Team>
 
     init {
         credentials = getCredentials(args)
-        teams = getTeams(args)
+        teams = getTeamsFromFile(args.teams)
 
         // TODO: read number of problems / difficult level from args or use default values
         // TODO: read contest name from args or use some default value
         // TODO: read contest start date from args or use the closest saturday midnight as a default value
     }
 
-    private fun getTeams(args: KattisCliArgs): MutableList<Team> {
-        // TODO: either read teams from a file that's passed as an argument or from configuration/teams.kattis
-        return mutableListOf()
+    private fun getTeamsFromFile(path: String): List<Team> {
+        val dictionary = getEntriesFromFile(path)
+        return dictionary.map { Team(it.key, it.value.toString().split(',')) }
     }
 
     private fun getCredentials(args: KattisCliArgs): Credentials {
-        val homePath = System.getenv("HOME")
+        val path = if (!args.settings.isBlank()) args.settings else "${System.getenv("HOME")}/.kattis"
 
         return when {
             !(args.user.isBlank() || args.user.isBlank()) -> {
                 Credentials(args.user, args.token)
             }
-            !args.settings.isBlank() -> {
-                getCredentialsFromFile(args.settings)
-            }
-            !homePath.isNullOrBlank() -> {
-                getCredentialsFromFile("$homePath/.kattis")
+            !path.isNullOrBlank() -> {
+                val dictionary = getEntriesFromFile(path)
+                Credentials(dictionary["username"].toString(), dictionary["token"].toString())
             }
             else -> {
                 throw Exception("Credentials are required.")
@@ -40,9 +39,9 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
         }
     }
 
-    private fun getCredentialsFromFile(path: String): Credentials {
-        val dictionary = hashMapOf<String, Any>()
+    private fun getEntriesFromFile(path: String): HashMap<String, Any> {
         val lines = reader.read(path)
+        val dictionary = hashMapOf<String, Any>()
 
         lines.map { it.trim() }
                 // filter empty lines
@@ -56,8 +55,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
                     }
                 }
 
-        return Credentials(dictionary["username"].toString(), dictionary["token"].toString())
+        return dictionary
     }
 }
 
-data class Credentials(val user: String, val token: String)

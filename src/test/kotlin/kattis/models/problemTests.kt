@@ -1,5 +1,6 @@
-package kattis
+package kattis.models
 
+import kattis.models.Problem
 import org.jsoup.Jsoup
 
 import org.junit.jupiter.api.Assertions.assertEquals

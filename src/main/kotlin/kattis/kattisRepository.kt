@@ -1,5 +1,8 @@
 package kattis
 
+import kattis.models.Contest
+import kattis.models.Problem
+import kattis.models.Team
 import khttp.get
 import khttp.post
 import khttp.put

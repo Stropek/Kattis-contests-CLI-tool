@@ -1,4 +1,4 @@
-package kattis
+package kattis.models
 
 class Contest(var name: String = "") {
     var isPrivileged: Boolean = false

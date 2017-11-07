@@ -3,6 +3,9 @@ package kattis
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import kattis.models.Contest
+import kattis.models.Problem
+import kattis.models.Team
 
 import khttp.responses.Response
 import org.json.JSONObject
@@ -17,7 +20,7 @@ internal class KattisApiTests {
     @Test fun `addTeamsToContest - list of teams - calls addTeamToContest for each team`() {
         // given
         val contest = Contest("contest_1")
-        val teams = listOf(Team("t1"), Team("t2"))
+        val teams = listOf(Team("t1", listOf()), Team("t2", listOf()))
         val mockRepository = mock<IKattisRepository>()
         val api = KattisApi(mockRepository)
 

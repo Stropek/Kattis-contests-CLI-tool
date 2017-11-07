@@ -1,5 +1,6 @@
 package kattis
 
+import kattis.models.Contest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertThrows
 

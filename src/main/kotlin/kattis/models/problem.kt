@@ -1,4 +1,4 @@
-package kattis
+package kattis.models
 
 import org.jsoup.nodes.Element
 
