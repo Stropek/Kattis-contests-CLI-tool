@@ -7,12 +7,14 @@ import kattis.models.Team
 class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var credentials: Credentials
     var teams: List<Team>
+    var numberOfProblems: Int
 
     init {
         credentials = getCredentials(args)
         teams = getTeamsFromFile(args.teams)
+        numberOfProblems = args.numberOfProblems
 
-        // TODO: read number of problems / difficult level from args or use default values
+        // TODO: read difficult level from args or use default value
         // TODO: read contest name from args or use some default value
         // TODO: read contest start date from args or use the closest saturday midnight as a default value
     }

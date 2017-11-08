@@ -13,13 +13,18 @@ import java.time.LocalDateTime
 val APP_NAME = "Kattis Competition CLI"
 
 fun main(args: Array<String>) {
-    try {
+    try
+    {
         run(KattisCliArgs(ArgParser(args)))
-    } catch (ex: ShowHelpException) {
+    }
+    catch (ex: ShowHelpException)
+    {
         StringWriter()
                 .apply { ex.printUserMessage(this, APP_NAME, 80) }
                 .apply { err.println(this) }
-    } catch (ex: Throwable) {
+    }
+    catch (ex: Throwable)
+    {
         err.println(ex.message)
     }
 }
@@ -49,9 +54,9 @@ fun run(args: KattisCliArgs) {
 //    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
 //    newContest.duration = 100
 //
-//    println(newContest.shortName)
-//
 //    api.addProblemsToContest(newContest, problems)
+
+    //TODO: api.createContest(command)
 
 //    File("responses/problems.html").bufferedWriter().use {
 //        out -> out.write(problems.text)

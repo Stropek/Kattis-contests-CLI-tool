@@ -114,4 +114,16 @@ class CommandTests {
         assertEquals("team_2", result.teams[1].name)
         assertEquals(1, result.teams[1].members.size)
     }
+    @Test fun `constructor() - numberOfProblems - args with numberOfProblems - sets numberOfProblems to value from args`() {
+        // given
+        val args = arrayOf("-p", "10")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals(10, result.numberOfProblems)
+    }
 }
