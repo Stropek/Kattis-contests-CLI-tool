@@ -8,18 +8,18 @@ import java.time.LocalDateTime
 import java.time.temporal.TemporalAdjusters
 
 class Command(args: KattisCliArgs, private val reader: IFileReader) {
+    var name: String
     var credentials: Credentials
     var teams: List<Team>
     var numberOfProblems: Int
-    var name: String
+    var minDifficulty: Double
 
     init {
+        name = if (args.name.isBlank()) getContestName(args.name) else args.name
         credentials = getCredentials(args)
         teams = getTeamsFromFile(args.teams)
         numberOfProblems = args.numberOfProblems
-        name = if (args.name.isBlank()) getContestName(args.name) else args.name
-
-        // TODO: read difficult level from args or use default value
+        minDifficulty = args.minDifficulty
         // TODO: read contest start date from args or use the closest saturday midnight as a default value
     }
 

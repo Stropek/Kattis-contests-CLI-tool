@@ -127,6 +127,18 @@ class CommandTests {
         // then
         assertEquals(10, result.numberOfProblems)
     }
+    @Test fun `constructor() - minDifficulty - args with minDifficulty - sets minDifficulty to value from args`() {
+        // given
+        val args = arrayOf("-m", "3.5")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals(3.5, result.minDifficulty)
+    }
     @Test fun `constructor() - name - args with name - sets name to value from args`() {
         // given
         val args = arrayOf("-n", "AvaSE-Mar")

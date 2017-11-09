@@ -51,7 +51,7 @@ internal class KattisApiTests {
         // given
         val mockHtml = ProblemsListHtml.Builder().withProblems(5).build()
         val mockRepository = mock<IKattisRepository> {
-            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml)
+            on { getProblemsPage(0) } doReturn Jsoup.parse(mockHtml)
         }
         val api = KattisApi(mockRepository)
 
@@ -66,7 +66,7 @@ internal class KattisApiTests {
         var mockHtml_1 = ProblemsListHtml.Builder().withProblems(5, 2.0).build()
         var mockHtml_2 = ProblemsListHtml.Builder().withProblems(5, 3.0).build()
         val mockRepository = mock<IKattisRepository> {
-            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml_1)
+            on { getProblemsPage(0) } doReturn Jsoup.parse(mockHtml_1)
             on { getProblemsPage(1) } doReturn Jsoup.parse(mockHtml_2)
         }
         val api = KattisApi(mockRepository)
@@ -83,7 +83,7 @@ internal class KattisApiTests {
         var mockHtml_2 = ProblemsListHtml.Builder().withProblems(5, 2.0).build()
         var mockHtml_3 = ProblemsListHtml.Builder().withProblems(5, 3.0).build()
         val mockRepository = mock<IKattisRepository> {
-            on { getProblemsPage() } doReturn Jsoup.parse(mockHtml_1)
+            on { getProblemsPage(0) } doReturn Jsoup.parse(mockHtml_1)
             on { getProblemsPage(1) } doReturn Jsoup.parse(mockHtml_2)
             on { getProblemsPage(2) } doReturn Jsoup.parse(mockHtml_3)
         }
