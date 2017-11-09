@@ -13,6 +13,7 @@ class KattisCliArgsTests {
 
         // then
         assertEquals("", result.name)
+        assertEquals("", result.startDate)
         assertEquals("", result.user)
         assertEquals("", result.token)
         assertEquals("", result.settings)
@@ -159,5 +160,25 @@ class KattisCliArgsTests {
 
         // then
         assertEquals("AvaSE-Feb", result.name)
+    }
+    @Test fun `constructor - args with '-d' parameter - sets contest start date`() {
+        // given
+        val args = arrayOf("-d", "2017-01-02")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals("2017-01-02", result.startDate)
+    }
+    @Test fun `constructor - args with '--start-date' parameter - sets contest start date`() {
+        // given
+        val args = arrayOf("--start-date", "2017-06-07")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals("2017-06-07", result.startDate)
     }
 }

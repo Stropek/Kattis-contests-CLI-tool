@@ -10,6 +10,8 @@ import KattisCliArgs
 import com.nhaarman.mockito_kotlin.doReturn
 import interfaces.IFileReader
 import org.junit.jupiter.api.Assertions.assertTrue
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 class CommandTests {
     @Test fun `constructor() - credentials - args with user and token - sets credentials`() {
@@ -162,5 +164,29 @@ class CommandTests {
 
         // then
         assertTrue(result.name.startsWith("AvaSE"))
+    }
+    @Test fun `constructor() - startDate - args with startDate - sets startDate to value from args`() {
+        // given
+        val args = arrayOf("-d", "2017-01-02 08:00:00")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals(LocalDate.parse("2017-01-02"), result.startDate.toLocalDate())
+    }
+    @Test fun `constructor() - startDate - args without startDate - sets startDate to default value`() {
+        // given
+        val args = arrayOf<String>()
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals(DayOfWeek.SATURDAY, result.startDate.dayOfWeek)
     }
 }

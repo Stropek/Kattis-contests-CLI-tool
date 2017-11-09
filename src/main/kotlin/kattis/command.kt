@@ -5,10 +5,12 @@ import interfaces.IFileReader
 import kattis.models.Team
 import java.time.DayOfWeek
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 
 class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var name: String
+    var startDate: LocalDateTime
     var credentials: Credentials
     var teams: List<Team>
     var numberOfProblems: Int
@@ -16,11 +18,22 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
 
     init {
         name = if (args.name.isBlank()) getContestName(args.name) else args.name
+        startDate = getStartDate(args.startDate)
         credentials = getCredentials(args)
         teams = getTeamsFromFile(args.teams)
         numberOfProblems = args.numberOfProblems
         minDifficulty = args.minDifficulty
-        // TODO: read contest start date from args or use the closest saturday midnight as a default value
+    }
+
+    private fun getStartDate(startDate: String): LocalDateTime {
+        return if (startDate.isBlank())
+        {
+            LocalDateTime.now().plusDays(1).with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
+        } else {
+            // TODO: improve date time parsing
+            val dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime.parse(startDate, dataFormatter)
+        }
     }
 
     private fun getContestName(name: String): String {
