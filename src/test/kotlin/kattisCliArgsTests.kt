@@ -17,6 +17,7 @@ class KattisCliArgsTests {
         assertEquals("", result.settings)
         assertEquals("configuration/teams.kattis", result.teams)
         assertEquals(5, result.numberOfProblems)
+        assertEquals("", result.name)
     }
     @Test fun `constructor - args with '-u' parameter - sets user`() {
         // given
@@ -117,5 +118,25 @@ class KattisCliArgsTests {
 
         // then
         assertEquals(10, result.numberOfProblems)
+    }
+    @Test fun `constructor - args with '-n' parameter - sets contest name`() {
+        // given
+        val args = arrayOf("-n", "AvaSE-Jan")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals("AvaSE-Jan", result.name)
+    }
+    @Test fun `constructor - args with '--name' parameter - sets contest name`() {
+        // given
+        val args = arrayOf("--name", "AvaSE-Feb")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals("AvaSE-Feb", result.name)
     }
 }

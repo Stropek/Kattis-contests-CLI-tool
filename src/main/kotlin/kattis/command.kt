@@ -3,20 +3,34 @@ package kattis
 import KattisCliArgs
 import interfaces.IFileReader
 import kattis.models.Team
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.time.temporal.TemporalAdjusters
 
 class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var credentials: Credentials
     var teams: List<Team>
     var numberOfProblems: Int
+    var name: String
 
     init {
         credentials = getCredentials(args)
         teams = getTeamsFromFile(args.teams)
         numberOfProblems = args.numberOfProblems
+        name = if (args.name.isBlank()) getContestName(args.name) else args.name
 
         // TODO: read difficult level from args or use default value
-        // TODO: read contest name from args or use some default value
         // TODO: read contest start date from args or use the closest saturday midnight as a default value
+    }
+
+    private fun getContestName(name: String): String {
+        val nextSaturday = LocalDateTime.now()
+                .plusDays(1)
+                .with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
+        val month = nextSaturday.month.name.substring(3)
+        val year = nextSaturday.year
+
+        return "AvaSE-$month-$year"
     }
 
     private fun getTeamsFromFile(path: String): List<Team> {

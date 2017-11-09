@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.mock
 import KattisCliArgs
 import com.nhaarman.mockito_kotlin.doReturn
 import interfaces.IFileReader
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class CommandTests {
     @Test fun `constructor() - credentials - args with user and token - sets credentials`() {
@@ -24,7 +25,7 @@ class CommandTests {
         assertEquals("jon", result.credentials.user)
         assertEquals("snow", result.credentials.token)
     }
-    @Test fun `constructor() - credentials - args with settings - sets credentials using given settings file`() {
+    @Test fun `constructor() - credentials - args with settings - sets credentials to given settings file`() {
         // given
         val args = arrayOf("-s", "settings.txt")
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -54,7 +55,7 @@ class CommandTests {
         assertEquals("jon", result.credentials.user)
         assertEquals("snow", result.credentials.token)
     }
-    @Test fun `constructor() - credentials - args without either user-token or settings - sets credentials using settings file from home path`() {
+    @Test fun `constructor() - credentials - args without either user-token or settings - sets credentials to settings file from home path`() {
         // given
         val args = arrayOf<String>()
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -74,7 +75,7 @@ class CommandTests {
         assertEquals("jane", result.credentials.user)
         assertEquals("doe", result.credentials.token)
     }
-    @Test fun `constructor() - teams - args with teams - sets teams using given teams file`() {
+    @Test fun `constructor() - teams - args with teams - sets teams to given teams file`() {
         // given
         val args = arrayOf("-e", "teams.txt")
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -94,7 +95,7 @@ class CommandTests {
         assertEquals("team_2", result.teams[1].name)
         assertEquals(1, result.teams[1].members.size)
     }
-    @Test fun `constructor() - teams - args without teams - sets teams using file from default path`() {
+    @Test fun `constructor() - teams - args without teams - sets teams to file from default path`() {
         // given
         val args = arrayOf<String>()
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -125,5 +126,29 @@ class CommandTests {
 
         // then
         assertEquals(10, result.numberOfProblems)
+    }
+    @Test fun `constructor() - name - args with name - sets name to value from args`() {
+        // given
+        val args = arrayOf("-n", "AvaSE-Mar")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals("AvaSE-Mar", result.name)
+    }
+    @Test fun `constructor() - name - args without name - sets name to default value`() {
+        // given
+        val args = arrayOf<String>()
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertTrue(result.name.startsWith("AvaSE"))
     }
 }

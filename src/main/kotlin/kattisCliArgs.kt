@@ -11,8 +11,9 @@ class KattisCliArgs(parser: ArgParser) {
             .default("")
     val teams by parser.storing("-e", "--teams", help = "File with list of teams for the competition")
             .default("configuration/teams.kattis")
+    val name by parser.storing("-n", "--name", help = "Name of the competition")
+            .default("")
     val numberOfProblems by parser.storing("-p", "--num-of-problems", help = "Number of problems") { toInt() }
             .default(5)
 //    val minDifficulty by parser.storing("-m", "--min-diff-level", help = "Minimum difficulty level of problems") { toDouble() }
-//    val name by parser.storing("-n", "--competition-name", help = "Name of the competition")
 }
