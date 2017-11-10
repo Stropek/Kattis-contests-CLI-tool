@@ -34,6 +34,7 @@ fun main(args: Array<String>) {
 }
 
 fun run(args: KattisCliArgs) {
+    // TODO: add verbose logging
     val reader = FileReader()
     val command = Command(args, reader)
 
@@ -41,5 +42,9 @@ fun run(args: KattisCliArgs) {
     val api = KattisApi(repo)
 
     api.login(command.credentials.user, command.credentials.token)
-    api.createContest(command)
+    var contest = api.createContest(command)
+
+    var problems = api.getRandomProblems(command.numberOfProblems, command.minDifficulty)
+    api.addProblemsToContest(contest, problems)
+    api.addTeamsToContest(contest, command.teams)
 }

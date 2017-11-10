@@ -1,5 +1,6 @@
 package kattis
 
+import interfaces.IKattisRepository
 import kattis.models.Contest
 import kattis.models.Problem
 import kattis.models.Team
@@ -7,14 +8,14 @@ import java.util.*
 
 class KattisApi(private val kattisRepository: IKattisRepository) {
     fun addTeamsToContest(contest: Contest, teams: List<Team>) {
-        for (team in teams) {
-            kattisRepository.addTeamToContest(contest, team)
+        teams.forEach {
+            kattisRepository.addTeamToContest(contest, it)
         }
     }
 
     fun addProblemsToContest(contest: Contest, problems: List<Problem>) {
-        for (problem in problems) {
-            kattisRepository.addProblemToContest(contest, problem)
+        problems.forEach {
+            kattisRepository.addProblemToContest(contest, it)
         }
     }
 
@@ -65,17 +66,6 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
 
         createContest(contest)
 
-        // add teams to contest
-        //    api.addTeamsToContest(newContest, command.teams)
-
-        //    val problems = api.getRandomProblems(10, 3.0)
-        //    val newContest = api.createBlankContest()
-        //
-        //    newContest.name = "Kattis with problems"
-        //    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
-        //    newContest.duration = 100
-        //
-        //    api.addProblemsToContest(newContest, problems)
         return contest
     }
 

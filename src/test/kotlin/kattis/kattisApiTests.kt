@@ -5,6 +5,7 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.xenomachina.argparser.ArgParser
 import interfaces.IFileReader
+import interfaces.IKattisRepository
 import kattis.models.Contest
 import kattis.models.Problem
 import kattis.models.Team
@@ -168,11 +169,6 @@ class ProblemsListHtml {
                 |       </tbody>
                 |   </table>
                 |</html>""".trimMargin()
-        }
-
-        fun withProblem(name: String): ProblemsListHtml.Builder {
-            problems.add(getProblemRow(name))
-            return this
         }
 
         fun withProblems(number: Int, difficulty: Double? = null): ProblemsListHtml.Builder {
