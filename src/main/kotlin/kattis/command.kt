@@ -42,7 +42,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
         val nextSaturday = LocalDateTime.now()
                 .plusDays(1)
                 .with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
-        val month = nextSaturday.month.name.substring(3)
+        val month = nextSaturday.month.name.substring(0, 3)
         val year = nextSaturday.year
 
         return "AvaSE-$month-$year"

@@ -17,13 +17,13 @@ private val logger = KotlinLogging.logger {}
 fun main(args: Array<String>) {
     try
     {
-        var args = ArgParser(args)
-        val kattisArgs = KattisCliArgs(args)
-        args.force()
+        val argsParser = ArgParser(args)
+        val kattisArgs = KattisCliArgs(argsParser)
+        argsParser.force()
 
-        logger.info { "Running $appName." }
+        logger.info { "Running $appName.\n" }
         run(kattisArgs)
-        logger.info { "Done. Exiting $appName." }
+        logger.info { "Finished. Exiting $appName.\n" }
     }
     catch (ex: ShowHelpException)
     {
@@ -38,17 +38,16 @@ fun main(args: Array<String>) {
 }
 
 fun run(args: KattisCliArgs) {
-    // gTODO: add verbose logging
     val reader = FileReader()
     val command = Command(args, reader)
 
-//    val repo = KattisRepository()
-//    val api = KattisApi(repo)
-//
-//    api.login(command.credentials.user, command.credentials.token)
-//    var contest = api.createContest(command)
-//
-//    var problems = api.getRandomProblems(command.numberOfProblems, command.minDifficulty)
-//    api.addProblemsToContest(contest, problems)
-//    api.addTeamsToContest(contest, command.teams)
+    val repo = KattisRepository()
+    val api = KattisApi(repo)
+
+    api.login(command.credentials.user, command.credentials.token)
+    val contest = api.createContest(command)
+    val problems = api.getRandomProblems(command.numberOfProblems, command.minDifficulty)
+
+    api.addProblemsToContest(contest, problems)
+    api.addTeamsToContest(contest, command.teams)
 }
