@@ -1,8 +1,12 @@
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 
+import org.apache.log4j.Level
+import org.apache.log4j.LogManager
+
 class KattisCliArgs(parser: ArgParser) {
-    // TODO: add argument for verbose logging: https://github.com/MicroUtils/kotlin-logging
+    val verbose by parser.flagging("-v", "--verbose", help = "Enable verbose logging")
+            .apply { LogManager.getRootLogger().level = Level.DEBUG }
     val name by parser.storing("-n", "--name", help = "Contest name")
             .default("")
     val startDate by parser.storing("-d", "--start-date", help = "Contest start date")

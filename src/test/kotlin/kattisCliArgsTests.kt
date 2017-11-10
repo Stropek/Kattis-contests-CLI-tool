@@ -20,6 +20,7 @@ class KattisCliArgsTests {
         assertEquals("configuration/teams.kattis", result.teams)
         assertEquals(5, result.numberOfProblems)
         assertEquals(2.5, result.minDifficulty)
+        assertEquals(false, result.verbose)
     }
     @Test fun `constructor - args with '-u' parameter - sets user`() {
         // given
@@ -180,5 +181,25 @@ class KattisCliArgsTests {
 
         // then
         assertEquals("2017-06-07", result.startDate)
+    }
+    @Test fun `constructor - args with '-v' parameter - sets verbose to true`() {
+        // given
+        val args = arrayOf("-v")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals(true, result.verbose)
+    }
+    @Test fun `constructor - args with '--verbose' parameter - sets verbose to true`() {
+        // given
+        val args = arrayOf("--verbose")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals(true, result.verbose)
     }
 }

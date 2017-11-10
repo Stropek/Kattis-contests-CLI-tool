@@ -7,6 +7,7 @@ import java.util.*
 
 // TODO: remove all functions that aren't needed at top level
 // TODO: but keep unit tests
+// TODO: in other words, change all functions which aren't supposed to be part of the interface to private and arrange them in correct order
 interface IKattisApi {
     fun addTeamsToContest(contest: Contest, teams: List<Team>)
 
@@ -35,15 +36,15 @@ class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
     }
 
     override fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double): List<Problem> {
-        var selectedNumbers = setOf<Int>()
+        var selectedNumbers = setOf<String>()
         var selectedProblems = mutableListOf<Problem>()
         var random = Random()
         var pageNo = -1
 
         do {
             pageNo++
+            println("getProblems($pageNo)")
             val document = kattisRepository.getProblemsPage(pageNo)
-            // println("getProblems($pageNo)")
             val rows = document.select("table.problem_list tbody tr")
             val firstProblem = Problem.parseRow(rows[0])
             if (firstProblem.difficulty < minDifficulty) {
@@ -52,7 +53,7 @@ class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
             }
 
             val selectedNumber = random.nextInt(rows.size)
-            selectedNumbers = selectedNumbers.plus(selectedNumber)
+            selectedNumbers = selectedNumbers.plus("$pageNo $selectedNumber")
 
             val selectedProblem = Problem.parseRow(rows[selectedNumber])
             selectedProblems.add(selectedProblem)

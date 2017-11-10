@@ -46,9 +46,6 @@ class Contest(var name: String = "") {
                     "existing" -> contest.existing = it.value.toBoolean()
                     "short_name" -> contest.name = it.value
                     "csrf_token" -> contest.csrfToken = it.value.trim('"')
-                    // TODO:
-                    // "teams" ->
-                    // "judges" ->
                 }
             }
 

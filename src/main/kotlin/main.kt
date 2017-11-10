@@ -2,19 +2,22 @@ import kattis.Command
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.ShowHelpException
+
+import mu.KotlinLogging
+
+import java.io.StringWriter
+import java.lang.System.err
+
 import kattis.KattisApi
 import kattis.KattisRepository
 
-import java.io.StringWriter
-
-import java.lang.System.err
-import java.time.LocalDateTime
-
 val APP_NAME = "Kattis Competition CLI"
+private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     try
     {
+        logger.debug { "Running Kattis competition CLI..." }
         run(KattisCliArgs(ArgParser(args)))
     }
     catch (ex: ShowHelpException)
