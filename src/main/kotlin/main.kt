@@ -11,18 +11,24 @@ import kattis.KattisApi
 import kattis.KattisCliArgs
 import kattis.KattisRepository
 
-val APP_NAME = "Kattis Competition CLI"
+private val appName = "Kattis Competition CLI"
 private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     try
     {
-        run(KattisCliArgs(ArgParser(args)))
+        var args = ArgParser(args)
+        val kattisArgs = KattisCliArgs(args)
+        args.force()
+
+        logger.info { "Running $appName." }
+        run(kattisArgs)
+        logger.info { "Done. Exiting $appName." }
     }
     catch (ex: ShowHelpException)
     {
         StringWriter()
-                .apply { ex.printUserMessage(this, APP_NAME, 80) }
+                .apply { ex.printUserMessage(this, appName, 80) }
                 .apply { logger.info { this } }
     }
     catch (ex: Throwable)

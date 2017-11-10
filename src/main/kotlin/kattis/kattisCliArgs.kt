@@ -5,6 +5,7 @@ import com.xenomachina.argparser.default
 import mu.KotlinLogging
 import org.apache.log4j.Level
 import org.apache.log4j.LogManager
+import org.apache.log4j.PatternLayout
 
 private val logger = KotlinLogging.logger {}
 
@@ -12,7 +13,9 @@ class KattisCliArgs(parser: ArgParser) {
     val verbose by parser.flagging("-v", "--verbose", help = "Enable verbose logging")
             .addValidator {
                 if (value) {
-                    LogManager.getRootLogger().level = Level.DEBUG
+                    val rootLogger = LogManager.getRootLogger()
+                    rootLogger.level = Level.DEBUG
+                    rootLogger.getAppender("CA").layout = PatternLayout("%5p [%t] (%F:%L) - %m%n")
                     logger.debug { "Verbose logging enabled" }
                 }
             }
