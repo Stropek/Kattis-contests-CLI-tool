@@ -20,7 +20,7 @@ class KattisRepository : IKattisRepository {
     private val baseUrl = "http://open.kattis.com"
     private val headers = mapOf("User-Agent" to "kattis-cli-submit", "Content-Type" to "application/json")
 
-    lateinit var authCookies: CookieJar
+    private lateinit var authCookies: CookieJar
 
     override fun addTeamToContest(contest: Contest, team: Team) {
         val teamJson = contest.toData() + team.toData()
@@ -40,7 +40,7 @@ class KattisRepository : IKattisRepository {
         for (member in team.members) {
             val memberJson = contest.toData() + team.toData() + mapOf("username" to member.trim(), "accepted" to false)
 
-            logger.debug { "Adding ${member} to ${team.name} team" }
+            logger.debug { "Adding $member to ${team.name} team" }
             val memberResponse = post("$baseUrl/ajax/session/team/member",
                     cookies = authCookies,
                     headers = headers,
@@ -53,7 +53,7 @@ class KattisRepository : IKattisRepository {
         val json = contest.toData() + problem.toData()
 
         logger.debug { "Adding problem '${problem.name}' to '${contest.name}' contest" }
-        var problemResponse = post("$baseUrl/ajax/session/problem",
+        val problemResponse = post("$baseUrl/ajax/session/problem",
                 cookies = authCookies,
                 headers = headers,
                 json = json)

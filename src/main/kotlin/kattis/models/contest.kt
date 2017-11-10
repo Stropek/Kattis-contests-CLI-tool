@@ -38,7 +38,7 @@ class Contest(var name: String = "") {
         }
 
         private fun getContestFromDictionary(dictionary: HashMap<String, String>): Contest {
-            var contest = Contest()
+            val contest = Contest()
 
             dictionary.forEach {
                 when (it.key) {

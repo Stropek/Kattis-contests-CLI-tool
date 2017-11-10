@@ -60,7 +60,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
             !(args.user.isBlank() || args.user.isBlank()) -> {
                 Credentials(args.user, args.token)
             }
-            !path.isNullOrBlank() -> {
+            !path.isBlank() -> {
                 val dictionary = getEntriesFromFile(path)
                 Credentials(dictionary["username"].toString(), dictionary["token"].toString())
             }
