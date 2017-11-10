@@ -38,7 +38,7 @@ fun main(args: Array<String>) {
 }
 
 fun run(args: KattisCliArgs) {
-    // TODO: add verbose logging
+    // gTODO: add verbose logging
     val reader = FileReader()
     val command = Command(args, reader)
 

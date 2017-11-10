@@ -47,7 +47,6 @@ class KattisRepository : IKattisRepository {
     override fun addProblemToContest(contest: Contest, problem: Problem) {
         val json = contest.toData() + problem.toData()
 
-        // TODO: handle case when problem is not found
         post("$baseUrl/ajax/session/problem",
                 cookies = authCookies,
                 headers = headers,

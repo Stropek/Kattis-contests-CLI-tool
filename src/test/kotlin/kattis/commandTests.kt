@@ -1,14 +1,13 @@
 package kattis
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
 
 import com.xenomachina.argparser.ArgParser
 import com.nhaarman.mockito_kotlin.mock
 
 import com.nhaarman.mockito_kotlin.doReturn
 import interfaces.IFileReader
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -152,7 +151,7 @@ class CommandTests {
         // then
         assertEquals("AvaSE-Mar", result.name)
     }
-    @Test fun `constructor() - name - args without name - sets name to default value`() {
+    @Test fun `constructor() - name - args without name - sets name to value which starts with AvaSE`() {
         // given
         val args = arrayOf<String>()
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -176,7 +175,7 @@ class CommandTests {
         // then
         assertEquals(LocalDate.parse("2017-01-02"), result.startDate.toLocalDate())
     }
-    @Test fun `constructor() - startDate - args without startDate - sets startDate to default value`() {
+    @Test fun `constructor() - startDate - args without startDate - sets startDate to saturday`() {
         // given
         val args = arrayOf<String>()
         val kattisArgs = KattisCliArgs(ArgParser(args))
@@ -187,5 +186,29 @@ class CommandTests {
 
         // then
         assertEquals(DayOfWeek.SATURDAY, result.startDate.dayOfWeek)
+    }
+    @Test fun `constructor() - isOpen - args with isOpen - sets isOpen to true`() {
+        // given
+        val args = arrayOf("-o")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertTrue(result.isOpen)
+    }
+    @Test fun `constructor() - duration - args with duration - sets duration to value from args`() {
+        // given
+        val args = arrayOf("-r", "150")
+        val kattisArgs = KattisCliArgs(ArgParser(args))
+        val mockReader = mock<IFileReader>()
+
+        // when
+        val result = Command(kattisArgs, mockReader)
+
+        // then
+        assertEquals(150, result.duration)
     }
 }

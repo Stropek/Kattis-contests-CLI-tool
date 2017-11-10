@@ -21,8 +21,8 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
 
     fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0): List<Problem> {
         var selectedNumbers = setOf<String>()
-        var selectedProblems = mutableListOf<Problem>()
-        var random = Random()
+        val selectedProblems = mutableListOf<Problem>()
+        val random = Random()
         var pageNo = -1
 
         do {
@@ -50,8 +50,7 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
 
     fun login(user: String, token: String): String {
         val loginArgs = mapOf("user" to user, "token" to token, "script" to "true")
-
-        var response = kattisRepository.login(loginArgs)
+        val response = kattisRepository.login(loginArgs)
         return response.text
     }
 
@@ -60,9 +59,8 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
 
         contest.name = command.name
         contest.startTime = command.startDate.toString()
-//      TODO: add cmd line parameters for isOpen and duration
-//        contest.duration = command.duration
-//        contest.isOpen = command.isOpen
+        contest.duration = command.duration
+        contest.isOpen = command.isOpen
 
         createContest(contest)
 
@@ -71,10 +69,8 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
 
     private fun getBlankContest() : Contest {
         val document = kattisRepository.getNewContestPage()
-
-        var contestData = document.select("script")
+        val contestData = document.select("script")
                 .single { it.toString().contains("Kattis.views.contest.edit.data") }
-
         return Contest.parse(contestData.toString())
     }
 

@@ -14,6 +14,8 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var teams: List<Team>
     var numberOfProblems: Int
     var minDifficulty: Double
+    var isOpen: Boolean
+    var duration: Int
 
     init {
         name = if (args.name.isBlank()) getContestName() else args.name
@@ -22,6 +24,8 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
         teams = getTeamsFromFile(args.teams)
         numberOfProblems = args.numberOfProblems
         minDifficulty = args.minDifficulty
+        isOpen = args.isOpen
+        duration = args.duration
     }
 
     private fun getStartDate(startDate: String): LocalDateTime {
@@ -29,8 +33,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
         {
             LocalDateTime.now().plusDays(1).with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
         } else {
-            // TODO: improve date time parsing
-            val dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            val dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             LocalDateTime.parse(startDate, dataFormatter)
         }
     }

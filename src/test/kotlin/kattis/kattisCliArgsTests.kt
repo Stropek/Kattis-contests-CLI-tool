@@ -1,9 +1,7 @@
 package kattis
 
 import com.xenomachina.argparser.ArgParser
-import kattis.KattisCliArgs
-
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class KattisCliArgsTests {
@@ -23,7 +21,9 @@ class KattisCliArgsTests {
         assertEquals("configuration/teams.kattis", result.teams)
         assertEquals(5, result.numberOfProblems)
         assertEquals(2.5, result.minDifficulty)
-        assertEquals(false, result.verbose)
+        assertFalse(result.verbose)
+        assertFalse(result.isOpen)
+        assertEquals(168, result.duration)
     }
     @Test fun `constructor - args with '-u' parameter - sets user`() {
         // given
@@ -193,7 +193,7 @@ class KattisCliArgsTests {
         val result = KattisCliArgs(ArgParser(args))
 
         // then
-        assertEquals(true, result.verbose)
+        assertTrue(result.verbose)
     }
     @Test fun `constructor - args with '--verbose' parameter - sets verbose to true`() {
         // given
@@ -203,6 +203,46 @@ class KattisCliArgsTests {
         val result = KattisCliArgs(ArgParser(args))
 
         // then
-        assertEquals(true, result.verbose)
+        assertTrue(result.verbose)
+    }
+    @Test fun `constructor - args with '-o' parameter - sets isOpen to true`() {
+        // given
+        val args = arrayOf("-o")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertTrue(result.isOpen)
+    }
+    @Test fun `constructor - args with '--open' parameter - sets isOpen to true`() {
+        // given
+        val args = arrayOf("--open")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertTrue(result.isOpen)
+    }
+    @Test fun `constructor - args with '-r' parameter - sets duration`() {
+        // given
+        val args = arrayOf("-r", "100")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals(100, result.duration)
+    }
+    @Test fun `constructor - args with '--duration' parameter - sets duration`() {
+        // given
+        val args = arrayOf("--duration", "50")
+
+        // when
+        val result = KattisCliArgs(ArgParser(args))
+
+        // then
+        assertEquals(50, result.duration)
     }
 }

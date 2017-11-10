@@ -35,4 +35,7 @@ class KattisCliArgs(parser: ArgParser) {
             .default(5)
     val minDifficulty by parser.storing("-m", "--min-level", help = "Minimum difficulty level of problems") { toDouble() }
             .default(2.5)
+    val isOpen by parser.flagging("-o", "--open", help = "Flag determining type of registration")
+    val duration by parser.storing("-r", "--duration", help = "Contest duration") { toInt() }
+            .default(168)
 }
