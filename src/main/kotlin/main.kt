@@ -6,7 +6,6 @@ import com.xenomachina.argparser.ShowHelpException
 import mu.KotlinLogging
 
 import java.io.StringWriter
-import java.lang.System.err
 
 import kattis.KattisApi
 import kattis.KattisCliArgs
@@ -18,18 +17,17 @@ private val logger = KotlinLogging.logger {}
 fun main(args: Array<String>) {
     try
     {
-        logger.debug { "Running Kattis competition CLI..." }
         run(KattisCliArgs(ArgParser(args)))
     }
     catch (ex: ShowHelpException)
     {
         StringWriter()
                 .apply { ex.printUserMessage(this, APP_NAME, 80) }
-                .apply { err.println(this) }
+                .apply { logger.info { this } }
     }
     catch (ex: Throwable)
     {
-        err.println(ex.message)
+        logger.error { ex.message }
     }
 }
 
@@ -38,13 +36,13 @@ fun run(args: KattisCliArgs) {
     val reader = FileReader()
     val command = Command(args, reader)
 
-    val repo = KattisRepository()
-    val api = KattisApi(repo)
-
-    api.login(command.credentials.user, command.credentials.token)
-    var contest = api.createContest(command)
-
-    var problems = api.getRandomProblems(command.numberOfProblems, command.minDifficulty)
-    api.addProblemsToContest(contest, problems)
-    api.addTeamsToContest(contest, command.teams)
+//    val repo = KattisRepository()
+//    val api = KattisApi(repo)
+//
+//    api.login(command.credentials.user, command.credentials.token)
+//    var contest = api.createContest(command)
+//
+//    var problems = api.getRandomProblems(command.numberOfProblems, command.minDifficulty)
+//    api.addProblemsToContest(contest, problems)
+//    api.addTeamsToContest(contest, command.teams)
 }

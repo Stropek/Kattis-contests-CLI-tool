@@ -16,7 +16,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
     var minDifficulty: Double
 
     init {
-        name = if (args.name.isBlank()) getContestName(args.name) else args.name
+        name = if (args.name.isBlank()) getContestName() else args.name
         startDate = getStartDate(args.startDate)
         credentials = getCredentials(args)
         teams = getTeamsFromFile(args.teams)
@@ -35,7 +35,7 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
         }
     }
 
-    private fun getContestName(name: String): String {
+    private fun getContestName(): String {
         val nextSaturday = LocalDateTime.now()
                 .plusDays(1)
                 .with(TemporalAdjusters.next(DayOfWeek.SATURDAY))

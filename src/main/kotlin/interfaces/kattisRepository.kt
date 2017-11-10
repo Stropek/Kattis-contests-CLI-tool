@@ -8,7 +8,7 @@ import org.json.JSONObject
 import org.jsoup.nodes.Document
 
 interface IKattisRepository {
-    fun addTeamToContest(contest: Contest, teams: Team)
+    fun addTeamToContest(contest: Contest, team: Team)
 
     fun addProblemToContest(contest: Contest, problem: Problem)
 
@@ -20,5 +20,5 @@ interface IKattisRepository {
 
     fun getNewContestPage(): Document
 
-    fun login(user: Map<String, String>): Response
+    fun login(credentials: Map<String, String>): Response
 }

@@ -82,9 +82,9 @@ class KattisRepository : IKattisRepository {
                 .get()
     }
 
-    override fun login(loginArgs: Map<String, String>): Response {
+    override fun login(credentials: Map<String, String>): Response {
         val response = get("$baseUrl/login",
-                data = loginArgs,
+                data = credentials,
                 headers = headers)
         authCookies = response.cookies
         return response
