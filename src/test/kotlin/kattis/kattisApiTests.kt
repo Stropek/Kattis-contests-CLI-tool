@@ -3,15 +3,14 @@ package kattis
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.xenomachina.argparser.ArgParser
+import interfaces.IFileReader
 import kattis.models.Contest
 import kattis.models.Problem
 import kattis.models.Team
-
 import khttp.responses.Response
 import org.json.JSONObject
-
 import org.jsoup.Jsoup
-
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import org.mockito.Mockito
@@ -96,29 +95,11 @@ internal class KattisApiTests {
         assertEquals(1, result.size)
         assertEquals(3.0, result.first().difficulty)
     }
-    @Test fun `createContest() - JSONObject with redirect URL - modifies contest's short name`() {
-        // when
-        val json = """{
-            |   "success": true,
-            |   "response": {
-            |       "redirect": "/problems/after"
-            |   }
-            |}""".trimMargin()
-        val mockRepository = mock<IKattisRepository> {
-            on { createNewContest(any()) } doReturn JSONObject(json)
-        }
-        val contest = Contest()
-        contest.shortName = "before"
-        val api = KattisApi(mockRepository)
-
-        // when
-        api.createContest(contest)
-
-        // then
-        assertEquals("after", contest.shortName)
-    }
-    @Test fun `createBlankContest() - html with contest data - returns new contest object`() {
+    @Test fun `createContest() - html with contest data - sets csrf token and short name`() {
         // given
+        val args = arrayOf<String>()
+        val reader = mock<IFileReader>()
+        val command = Command(KattisCliArgs(ArgParser(args)), reader)
         val mockHtml = """
             |<html>
             |  <head></head>
@@ -138,16 +119,24 @@ internal class KattisApiTests {
             |  </body>
             |</html>
         """.trimMargin()
+        val mockJson = """{
+            |   "success": true,
+            |   "response": {
+            |       "redirect": "/problems/short_name"
+            |   }
+            |}""".trimMargin()
         val mockRepository = mock<IKattisRepository> {
             on { getNewContestPage() } doReturn Jsoup.parse(mockHtml)
+            on { createNewContest(any()) } doReturn JSONObject(mockJson)
         }
         val api = KattisApi(mockRepository)
 
         // when
-        val result = api.createBlankContest()
+        val result = api.createContest(command)
 
         // then
         assertEquals("1234567890", result.csrfToken)
+        assertEquals("short_name", result.shortName)
     }
     @Test fun `login() - valid response from repo - returns successful login message`() {
         // given

@@ -5,37 +5,20 @@ import kattis.models.Problem
 import kattis.models.Team
 import java.util.*
 
-// TODO: remove all functions that aren't needed at top level
-// TODO: but keep unit tests
-// TODO: in other words, change all functions which aren't supposed to be part of the interface to private and arrange them in correct order
-interface IKattisApi {
-    fun addTeamsToContest(contest: Contest, teams: List<Team>)
-
-    fun addProblemsToContest(contest: Contest, problems: List<Problem>)
-
-    fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0) : List<Problem>
-
-    fun createContest(contest: Contest)
-
-    fun createBlankContest() : Contest
-
-    fun login(user: String, toke: String) : String
-}
-
-class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
-    override fun addTeamsToContest(contest: Contest, teams: List<Team>) {
+class KattisApi(private val kattisRepository: IKattisRepository) {
+    fun addTeamsToContest(contest: Contest, teams: List<Team>) {
         for (team in teams) {
             kattisRepository.addTeamToContest(contest, team)
         }
     }
 
-    override fun addProblemsToContest(contest: Contest, problems: List<Problem>) {
+    fun addProblemsToContest(contest: Contest, problems: List<Problem>) {
         for (problem in problems) {
             kattisRepository.addProblemToContest(contest, problem)
         }
     }
 
-    override fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double): List<Problem> {
+    fun getRandomProblems(numberOfProblems: Int, minDifficulty: Double = 0.0): List<Problem> {
         var selectedNumbers = setOf<String>()
         var selectedProblems = mutableListOf<Problem>()
         var random = Random()
@@ -64,15 +47,39 @@ class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
         return selectedProblems
     }
 
-    override fun createContest(contest: Contest) {
-        val json = kattisRepository.createNewContest(contest)
+    fun login(user: String, token: String): String {
+        val loginArgs = mapOf("user" to user, "token" to token, "script" to "true")
 
-        contest.shortName = json.getJSONObject("response")
-                .getString("redirect")
-                .let { it.split("/")[2] }
+        var response = kattisRepository.login(loginArgs)
+        return response.text
     }
 
-    override fun createBlankContest() : Contest {
+    fun createContest(command: Command): Contest {
+        val contest = getBlankContest()
+
+        contest.name = command.name
+        contest.startTime = command.startDate.toString()
+//      TODO: add cmd line parameters for isOpen and duration
+//        contest.duration = command.duration
+//        contest.isOpen = command.isOpen
+
+        createContest(contest)
+
+        // add teams to contest
+        //    api.addTeamsToContest(newContest, command.teams)
+
+        //    val problems = api.getRandomProblems(10, 3.0)
+        //    val newContest = api.createBlankContest()
+        //
+        //    newContest.name = "Kattis with problems"
+        //    newContest.startTime = LocalDateTime.now().plusDays(10).toString()
+        //    newContest.duration = 100
+        //
+        //    api.addProblemsToContest(newContest, problems)
+        return contest
+    }
+
+    private fun getBlankContest() : Contest {
         val document = kattisRepository.getNewContestPage()
 
         var contestData = document.select("script")
@@ -81,10 +88,11 @@ class KattisApi(private val kattisRepository: IKattisRepository) : IKattisApi {
         return Contest.parse(contestData.toString())
     }
 
-    override fun login(user: String, token: String) : String {
-        val loginArgs = mapOf("user" to user, "token" to token, "script" to "true")
+    private fun createContest(contest: Contest) {
+        val json = kattisRepository.createNewContest(contest)
 
-        var response = kattisRepository.login(loginArgs)
-        return response.text
+        contest.shortName = json.getJSONObject("response")
+                .getString("redirect")
+                .let { it.split("/")[2] }
     }
 }

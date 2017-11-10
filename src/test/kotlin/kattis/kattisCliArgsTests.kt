@@ -1,4 +1,7 @@
+package kattis
+
 import com.xenomachina.argparser.ArgParser
+import kattis.KattisCliArgs
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import com.xenomachina.argparser.ArgParser
 import com.nhaarman.mockito_kotlin.mock
 
-import KattisCliArgs
 import com.nhaarman.mockito_kotlin.doReturn
 import interfaces.IFileReader
 import org.junit.jupiter.api.Assertions.assertTrue

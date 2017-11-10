@@ -1,6 +1,5 @@
 package kattis
 
-import KattisCliArgs
 import interfaces.IFileReader
 import kattis.models.Team
 import java.time.DayOfWeek
