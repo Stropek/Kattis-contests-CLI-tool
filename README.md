@@ -28,10 +28,10 @@ Name  | Short Name | Purpose
 ##### Parameters
 Name  | Short Name | Default Value | Purpose | 
 ------------------------ | ------------------------ | ------------------------ | ------------- 
---name  | -n | AvaSE-{month}-{year} | Contest name. {month} and {year} values are for the next Saturday.
---startDate | -d | 11:59:00PM of the next Saturday | Date and time that the contest starts.
---user | -u | Read from _.kattis_ file in _HOME_ path | Name of the user that's going to be contest's author.
---token | -t | Read from _.kattis_ file in _HOME_ path | Token of the user that's going to be contest's author.
+--name  | -n | AvaSE-{month}-{year} | Contest name. {month} & {year} - for the next Saturday.
+--startDate | -d | Next Saturday, 11:59PM | Date and time that the contest starts.
+--user | -u | From _.kattis_ file (_HOME_ dir) | Name of the user that's going to be contest's author.
+--token | -t | From _.kattis_ file (_HOME_ dir) | Token of the user that's going to be contest's author.
 --setting | -s | | File to use instead of _.kattis_ file in _HOME_ path.
 --teams | | configuration/teams.kattis | File with _teams_ defined.
 --problems | | 5 | Number of problems to include in the contest.
