@@ -27,7 +27,7 @@ Name  | Short Name | Purpose
 
 ##### Parameters
 Name  | Short Name | Default Value | Purpose | 
-------------- | ------------- | ------------- | ------------- 
+------------------------ | ------------------------ | ------------------------ | ------------- 
 --name  | -n | AvaSE-{month}-{year} | Contest name. {month} and {year} values are for the closest Saturday to the date that the contest is created on.
 --startDate | -d | 11:59:00PM of the next Saturday | Date and time that the contest starts.
 --user | -u | Read from _.kattis_ file in _HOME_ path | Name of the user that's going to be contest's author.
