@@ -21,9 +21,9 @@ fun main(args: Array<String>) {
         val kattisArgs = KattisCliArgs(argsParser)
         argsParser.force()
 
-        logger.info { "Running $appName.\n" }
+        logger.info { "Running $appName." }
         run(kattisArgs)
-        logger.info { "Finished. Exiting $appName.\n" }
+        logger.info { "Finished. Exiting $appName." }
     }
     catch (ex: ShowHelpException)
     {
