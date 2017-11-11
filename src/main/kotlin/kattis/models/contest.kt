@@ -8,14 +8,14 @@ class Contest(var name: String = "") {
     var judges: MutableList<String> = mutableListOf()
     var teams: MutableList<String> = mutableListOf()
 
-    var startTime: String = ""
+    var startDate: String = ""
     var duration: Int = 0
     var isOpen: Boolean = false
 
     fun toData(): Map<String, Any> {
         return mapOf("session_name" to this.name,
                 "short_name" to this.shortName,
-                "start_time" to this.startTime,
+                "start_time" to this.startDate,
                 "duration" to "${this.duration}:00",
                 "is_open" to false,
                 "csrf_token" to this.csrfToken.trim('\''))

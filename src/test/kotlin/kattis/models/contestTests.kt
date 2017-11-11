@@ -15,7 +15,7 @@ internal class ContestTests {
         assertEquals("", result.name)
         assertEquals("", result.shortName)
         assertEquals("", result.csrfToken)
-        assertEquals("", result.startTime)
+        assertEquals("", result.startDate)
         assertEquals(0, result.duration)
         assertEquals(mutableListOf<String>(), result.judges)
         assertEquals(mutableListOf<String>(), result.teams)
@@ -80,7 +80,7 @@ internal class ContestTests {
         // given
         val contest = Contest("c_1")
         contest.shortName = "sn"
-        contest.startTime = "123"
+        contest.startDate = "123"
         contest.duration = 10
         contest.isOpen = true
         contest.csrfToken = "890"

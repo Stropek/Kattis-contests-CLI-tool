@@ -77,7 +77,7 @@ class CommandTests {
     }
     @Test fun `constructor() - teams - args with teams - sets teams to given teams file`() {
         // given
-        val args = arrayOf("-e", "teams.txt")
+        val args = arrayOf("--teams", "teams.txt")
         val kattisArgs = KattisCliArgs(ArgParser(args))
 
         val content = mutableListOf("# sample comment in a file", "team_1: sample@mail.pl, user-name", "team_2: other user")
@@ -117,7 +117,7 @@ class CommandTests {
     }
     @Test fun `constructor() - numberOfProblems - args with numberOfProblems - sets numberOfProblems to value from args`() {
         // given
-        val args = arrayOf("-p", "10")
+        val args = arrayOf("--problems", "10")
         val kattisArgs = KattisCliArgs(ArgParser(args))
         val mockReader = mock<IFileReader>()
 

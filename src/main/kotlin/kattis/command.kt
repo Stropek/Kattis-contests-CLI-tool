@@ -31,7 +31,11 @@ class Command(args: KattisCliArgs, private val reader: IFileReader) {
     private fun getStartDate(startDate: String): LocalDateTime {
         return if (startDate.isBlank())
         {
-            LocalDateTime.now().plusDays(1).with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
+            LocalDateTime.now().plusDays(1)
+                    .with(TemporalAdjusters.next(DayOfWeek.SATURDAY))
+                    .withHour(23)
+                    .withMinute(59)
+                    .withSecond(0)
         } else {
             val dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             LocalDateTime.parse(startDate, dataFormatter)

@@ -85,16 +85,6 @@ class KattisCliArgsTests {
         // then
         assertEquals("settings.txt", result.settings)
     }
-    @Test fun `constructor - args with '-t' parameter - sets teams`() {
-        // given
-        val args = arrayOf("-e", "teams.txt")
-
-        // when
-        val result = KattisCliArgs(ArgParser(args))
-
-        // then
-        assertEquals("teams.txt", result.teams)
-    }
     @Test fun `constructor - args with '--teams' parameter - sets teams`() {
         // given
         val args = arrayOf("--teams", "teams.txt")
@@ -105,19 +95,10 @@ class KattisCliArgsTests {
         // then
         assertEquals("teams.txt", result.teams)
     }
-    @Test fun `constructor - args with '-p' parameter - sets numberOfProblems`() {
-        // given
-        val args = arrayOf("-p", "10")
 
-        // when
-        val result = KattisCliArgs(ArgParser(args))
-
-        // then
-        assertEquals(10, result.numberOfProblems)
-    }
-    @Test fun `constructor - args with '--num-of-problems' parameter - sets numberOfProblems`() {
+    @Test fun `constructor - args with '--problems' parameter - sets numberOfProblems`() {
         // given
-        val args = arrayOf("--num-of-problems", "10")
+        val args = arrayOf("--problems", "10")
 
         // when
         val result = KattisCliArgs(ArgParser(args))

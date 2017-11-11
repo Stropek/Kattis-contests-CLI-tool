@@ -70,7 +70,7 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
         val contest = getBlankContest()
 
         contest.name = command.name
-        contest.startTime = command.startDate.toString()
+        contest.startDate = command.startDate.toString()
         contest.duration = command.duration
         contest.isOpen = command.isOpen
 
