@@ -1,5 +1,7 @@
 # Kattis Competition CLI
 
+[![Build Status](https://travis-ci.org/Stropek/KattisCompetitionCLI.svg?branch=master)](https://travis-ci.org/Stropek/KattisCompetitionCLI)
+
 ### Overview 
 Main purpose of _Kattis Competition CLI_ is to automate the process of contest creation on http://open.kattis.com
 
