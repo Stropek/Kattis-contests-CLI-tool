@@ -1,5 +1,7 @@
 # Kattis Competition CLI
 
+[![Build Status](https://travis-ci.org/Stropek/KattisCompetitionCLI.svg?branch=master)](https://travis-ci.org/Stropek/KattisCompetitionCLI)
+
 ### Overview 
 Main purpose of _Kattis Competition CLI_ is to automate the process of contest creation on http://open.kattis.com
 
@@ -29,7 +31,7 @@ Name  | Short Name | Purpose
 Name  | Short Name | Default Value | Purpose | 
 ------------------------ | ------------------------ | ------------------------ | ------------- 
 --name  | -n | AvaSE-{month}-{year} | Contest name. {month} & {year} - for the next Saturday.
---startDate | -d | Next Saturday, 11:59PM | Date and time that the contest starts.
+--start-date | -d | Next Saturday, 11:59PM | Date and time that the contest starts.
 --user | -u | From _.kattis_ file (_HOME_ dir) | Name of the user that's going to be contest's author.
 --token | -t | From _.kattis_ file (_HOME_ dir) | Token of the user that's going to be contest's author.
 --setting | -s | | File to use instead of _.kattis_ file in _HOME_ path.
