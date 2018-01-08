@@ -19,9 +19,9 @@ class KattisCliArgs(parser: ArgParser) {
                     logger.debug { "Verbose logging enabled" }
                 }
             }
-    val name by parser.storing("-n", "--name", help = "Contest name")
+    val name by parser.storing("-n", "--name", help = "Contest name (default=AvaSE-{month}-{year})")
             .default("")
-    val startDate by parser.storing("-d", "--start-date", help = "Contest start date")
+    val startDate by parser.storing("-d", "--start-date", help = "Contest start date (default=next Saturday, 11:59PM)")
             .default("")
     val user by parser.storing("-u", "--user", help = "Open Kattis user name")
             .default("")
@@ -29,11 +29,11 @@ class KattisCliArgs(parser: ArgParser) {
             .default("")
     val settings by parser.storing("-s", "--settings", help = "File with Open Kattis user name and token")
             .default("")
-    val teams by parser.storing("--teams", help = "File with list of teams for the contest")
+    val teams by parser.storing("--teams", help = "File with list of teams for the contest (default=configuration/teams.kattis)")
             .default("configuration/teams.kattis")
-    val numberOfProblems by parser.storing("--problems", help = "Number of problems") { toInt() }
+    val numberOfProblems by parser.storing("--problems", help = "Number of problems (default=5)") { toInt() }
             .default(5)
-    val minDifficulty by parser.storing("-m", "--min-level", help = "Minimum difficulty level of problems") { toDouble() }
+    val minDifficulty by parser.storing("-m", "--min-level", help = "Minimum difficulty level of problems (default=2.5)") { toDouble() }
             .default(2.5)
     val isOpen by parser.flagging("-o", "--open", help = "Flag determining type of registration")
     val duration by parser.storing("-r", "--duration", help = "Contest duration") { toInt() }
