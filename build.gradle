@@ -53,6 +53,8 @@ jacocoTestReport {
     }
 }
 
+check.dependsOn jacocoTestReport
+
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
