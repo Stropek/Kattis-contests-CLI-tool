@@ -1,6 +1,7 @@
 # Kattis Contests CLI Tool
 
 [![Build Status](https://travis-ci.org/Stropek/Kattis-contests-CLI-tool.svg?branch=master)](https://travis-ci.org/Stropek/Kattis-contests-CLI-tool)
+[![Codecov](https://img.shields.io/codecov/c/github/Stropek/Kattis-contests-CLI-tool.svg)](https://codecov.io/github/Stropek/Kattis-contests-CLI-tool)
 
 ### Overview 
 Main purpose of _Kattis Contests CLI Tool_ is to automate the process of contest creation on http://open.kattis.com
