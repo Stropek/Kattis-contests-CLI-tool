@@ -2,5 +2,5 @@ language: java
 before_install:
  - chmod +x gradlew
 after_success:
- - gradlew jacocoTestReport
+ - gradle jacocoTestReport
  - bash <(curl -s https://codecov.io/bash)
