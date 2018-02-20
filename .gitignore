@@ -27,3 +27,4 @@ responses/
 build/
 out/
 .idea/
+.gradle/
