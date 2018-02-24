@@ -17,7 +17,7 @@ import org.jsoup.nodes.Document
 private val logger = KotlinLogging.logger {}
 
 class KattisRepository : IKattisRepository {
-    private val baseUrl = "http://open.kattis.com"
+    private val baseUrl = Config.KattisBaseUrl
     private val headers = mapOf("User-Agent" to "kattis-cli-submit", "Content-Type" to "application/json")
 
     private lateinit var authCookies: CookieJar
