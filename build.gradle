@@ -3,6 +3,7 @@ version '1.0'
 buildscript {
     ext.khttp_version = '0.1.0'
     ext.kotlin_version = '1.2.21'
+    ext.kotlin_reflect_version = '1.2.21'
     ext.jsoup_version = '1.10.3'
     ext.mockito_version = '1.5.0'
     ext.junit_version = '5.0.0'
@@ -45,6 +46,7 @@ repositories {
 dependencies {
     compile "com.github.jkcclemens:khttp:$khttp_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_reflect_version"
     compile "org.jsoup:jsoup:$jsoup_version"
     compile "com.xenomachina:kotlin-argparser:$kotlin_argparser_version"
     compile "org.slf4j:slf4j-api:$slf4j_version"
