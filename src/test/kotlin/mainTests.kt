@@ -6,20 +6,20 @@ import org.junit.jupiter.api.Test
 
 internal class MainTests {
 
-    @Test fun `main - invalid parameter - completes successfully`() {
-        // given
-        val args = arrayOf("-invalid")
-
-        // when
-        main(args)
-    }
-    @Test fun `main - help parameter - completes successfully`() {
-        // given
-        val args = arrayOf("-h")
-
-        // when
-        main(args)
-    }
+//    @Test fun `main - invalid parameter - completes successfully`() {
+//        // given
+//        val args = arrayOf("-invalid")
+//
+//        // when
+//        main(args)
+//    }
+//    @Test fun `main - help parameter - completes successfully`() {
+//        // given
+//        val args = arrayOf("-h")
+//
+//        // when
+//        main(args)
+//    }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
         val wireMockServer = WireMockServer(MockPorts.MainTests)

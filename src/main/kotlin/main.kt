@@ -17,6 +17,7 @@ private val logger = KotlinLogging.logger {}
 fun main(args: Array<String>) {
     try
     {
+        logger.info { "Running $appName." }
         val argsParser = ArgParser(args)
         val kattisArgs = KattisCliArgs(argsParser)
         argsParser.force()
