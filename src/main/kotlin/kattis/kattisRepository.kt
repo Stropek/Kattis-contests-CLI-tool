@@ -87,7 +87,6 @@ class KattisRepository : IKattisRepository {
 
     override fun getNewContestPage(): Document {
         logger.debug { "Getting new contest page" }
-        logger.debug { "Url: $baseUrl/new-contest" }
         return Jsoup.connect("$baseUrl/new-contest")
                 .cookies(authCookies)
                 .headers(headers)
@@ -96,7 +95,6 @@ class KattisRepository : IKattisRepository {
 
     override fun login(credentials: Map<String, String>): Response {
         logger.debug { "Logging in ${credentials["user"]}" }
-        logger.debug { "Url: $baseUrl/login" }
         val response = post("$baseUrl/login",
                 data = credentials,
                 headers = headers)

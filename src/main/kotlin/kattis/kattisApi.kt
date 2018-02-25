@@ -10,6 +10,7 @@ import java.util.*
 private val logger = KotlinLogging.logger {}
 
 class KattisApi(private val kattisRepository: IKattisRepository) {
+
     fun addTeamsToContest(contest: Contest, teams: List<Team>) {
         logger.info { "Adding ${teams.size} teams to '${contest.name}' contest" }
 
