@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class ContestTests {
-    @Test fun `primary constructor should set default values`() {
+
+    @Test fun `constructor - sets default values`() {
         // when
         val result = Contest()
 
@@ -20,7 +21,7 @@ internal class ContestTests {
         assertEquals(mutableListOf<String>(), result.judges)
         assertEquals(mutableListOf<String>(), result.teams)
     }
-    @Test fun `parse when input contains valid 'is_privileged' value should return contest with given 'is_privileged' value`() {
+    @Test fun `parse - input contains valid 'is_privileged' value - returns contest with given 'is_privileged' value`() {
         // given
         val input = """jQuery.extend(jQuery.ns('Kattis.views.contest.edit.data'), {
             |is_privileged: true,
@@ -29,12 +30,12 @@ internal class ContestTests {
         """.trimMargin()
 
         // when
-        var result = Contest.parse(input)
+        val result = Contest.parse(input)
 
         // then
         assertEquals(true, result.isPrivileged)
     }
-    @Test fun `parse when input contains invalid 'is_privileged' value should return contest with default 'is_privileged' value`() {
+    @Test fun `parse - input contains invalid 'is_privileged' value - returns contest with default 'is_privileged' value`() {
         // given
         val input = """jQuery.extend(jQuery.ns('Kattis.views.contest.edit.data'), {
             |is_privileged: tr ue,
@@ -43,12 +44,12 @@ internal class ContestTests {
         """.trimMargin()
 
         // when
-        var result = Contest.parse(input)
+        val result = Contest.parse(input)
 
         // then
         assertEquals(false, result.isPrivileged)
     }
-    @Test fun `parse when input contains valid 'short_name' value should return contest with given 'short_name' value`() {
+    @Test fun `parse - input contains valid 'short_name' value - returns contest with given 'short_name' value`() {
         // given
         val input = """jQuery.extend(jQuery.ns('Kattis.views.contest.edit.data'), {
             |other: "",
@@ -57,12 +58,12 @@ internal class ContestTests {
         """.trimMargin()
 
         // when
-        var result = Contest.parse(input)
+        val result = Contest.parse(input)
 
         // then
         assertEquals("test name", result.name)
     }
-    @Test fun `parse when input contains valid 'csrf_token' value should return contest with given 'csrf_token' value`() {
+    @Test fun `parse - input contains valid 'csrf_token' value - returns contest with given 'csrf_token' value`() {
         // given
         val input = """jQuery.extend(jQuery.ns('Kattis.views.contest.edit.data'), {
             |other: "",
@@ -71,12 +72,12 @@ internal class ContestTests {
         """.trimMargin()
 
         // when
-        var result = Contest.parse(input)
+        val result = Contest.parse(input)
 
         // then
         assertEquals("1234567890", result.csrfToken)
     }
-    @Test fun `toData() - returns map of contest's properties`() {
+    @Test fun `toData - returns map of contest's properties`() {
         // given
         val contest = Contest("c_1")
         contest.shortName = "sn"
@@ -96,4 +97,5 @@ internal class ContestTests {
         assertEquals(false, result["is_open"])
         assertEquals("890", result["csrf_token"])
     }
+
 }

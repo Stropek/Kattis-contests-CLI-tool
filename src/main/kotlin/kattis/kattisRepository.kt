@@ -95,7 +95,7 @@ class KattisRepository : IKattisRepository {
 
     override fun login(credentials: Map<String, String>): Response {
         logger.debug { "Logging in ${credentials["user"]}" }
-        val response = get("$baseUrl/login",
+        val response = post("$baseUrl/login",
                 data = credentials,
                 headers = headers)
         logger.debug { "Status code: ${response.statusCode}" }
