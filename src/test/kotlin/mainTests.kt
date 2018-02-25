@@ -60,12 +60,13 @@ internal class MainTests {
         val credentialsFilePath = MainTests::class.java.getResource("credentials.test")
                 .path.toString().trimStart('/')
 
-        val args = arrayOf("--teams", teamsFilePath, "--settings", credentialsFilePath)
+        val args = arrayOf("--teams", teamsFilePath, "--settings", credentialsFilePath, "-v")
 
         // when
         main(args)
 
         // then
+        verify(getRequestedFor(urlPathEqualTo("/new-contest")))
         verify(postRequestedFor(urlPathEqualTo("/login")))
         verify(putRequestedFor(urlPathEqualTo("/ajax/session")))
         verify(getRequestedFor(urlPathEqualTo("/problems")))
