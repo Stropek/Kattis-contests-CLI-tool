@@ -62,7 +62,8 @@ class KattisRepository : IKattisRepository {
 
     override fun getProblemsPage(page: Int, order: String, showUntried: Boolean, showTried: Boolean, showSolved: Boolean): Document {
         logger.debug { "Getting problems page #$page" }
-        val params = mapOf("page" to page.toString(), "order" to order,
+        val params = mapOf("page" to page.toString(),
+                "order" to order,
                 "show_untried" to if (showUntried) "on" else "off",
                 "show_tried" to if (showTried) "on" else "off",
                 "show_solved" to if (showSolved) "on" else "off")
