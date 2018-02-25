@@ -66,7 +66,6 @@ internal class MainTests {
         main(args)
 
         // then
-        verify(getRequestedFor(urlPathEqualTo("/new-contest")))
         verify(postRequestedFor(urlPathEqualTo("/login")))
         verify(putRequestedFor(urlPathEqualTo("/ajax/session")))
         verify(getRequestedFor(urlPathEqualTo("/problems")))
