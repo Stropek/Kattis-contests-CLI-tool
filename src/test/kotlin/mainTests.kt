@@ -1,25 +1,28 @@
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
+import interfaces.IFileReader
 import kattis.testData.MockResponses
 import org.junit.jupiter.api.Test
 
 internal class MainTests {
 
-//    @Test fun `main - invalid parameter - completes successfully`() {
-//        // given
-//        val args = arrayOf("-invalid")
-//
-//        // when
-//        main(args)
-//    }
-//    @Test fun `main - help parameter - completes successfully`() {
-//        // given
-//        val args = arrayOf("-h")
-//
-//        // when
-//        main(args)
-//    }
+    @Test fun `main - invalid parameter - completes successfully`() {
+        // given
+        val args = arrayOf("-invalid")
+
+        // when
+        main(args)
+    }
+    @Test fun `main - help parameter - completes successfully`() {
+        // given
+        val args = arrayOf("-h")
+
+        // when
+        main(args)
+    }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
         val wireMockServer = WireMockServer(MockPorts.MainTests)
@@ -55,10 +58,15 @@ internal class MainTests {
                 .willReturn(WireMock.aResponse()
                         .withStatus(200)))
 
-        val args = arrayOf("--teams", "resource.teams", "--settings", "resource.credentials", "-v")
+        val mockFileReader = mock<IFileReader> {
+            on { read("teams") } doReturn mutableListOf("team_1: test-member-1-1, test-member-1-2", "team_2: test-member-2-1")
+            on { read("credentials") } doReturn mutableListOf("username: test-user", "token: test-token")
+        }
+
+        val args = arrayOf("--teams", "teams", "--settings", "credentials", "-v")
 
         // when
-        main(args, ResourceFileReader())
+        main(args, mockFileReader)
 
         // then
         verify(getRequestedFor(urlPathEqualTo("/new-contest")))
