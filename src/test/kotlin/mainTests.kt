@@ -69,5 +69,6 @@ internal class MainTests {
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/problem")))
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/team")))
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/team/member")))
+        _wireMockServer.stop()
     }
 }
