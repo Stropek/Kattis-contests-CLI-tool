@@ -5,5 +5,14 @@ object Config {
             .add("classpath:config.properties")
             .build()
 
-    val KattisBaseUrl = properlty["KattisBaseUrl"]
+    var KattisBaseUrl: String? = ""
+        get() {
+            return if (Port.isBlank()) {
+                properlty["KattisBaseUrl"]
+            } else {
+                "${properlty["KattisBaseUrl"]}:$Port"
+            }
+        }
+
+    var Port = ""
 }

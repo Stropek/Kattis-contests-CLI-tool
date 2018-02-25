@@ -5,7 +5,12 @@ import kattis.testData.MockResponses
 import org.junit.jupiter.api.Test
 
 internal class MainTests {
-    private val _wireMockServer = WireMockServer()
+
+    private val _wireMockServer: WireMockServer = WireMockServer(MockPorts.MainTests)
+
+    init {
+        Config.Port = "${MockPorts.MainTests}"
+    }
 
     @Test fun `main - invalid parameter - completes successfully`() {
         // given
@@ -23,11 +28,8 @@ internal class MainTests {
     }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
-        if (!_wireMockServer.isRunning) {
-            _wireMockServer.start()
-        }
-        _wireMockServer.resetAll()
-
+        _wireMockServer.start()
+        WireMock.configureFor(MockPorts.MainTests)
         stubFor(get(urlPathEqualTo("/new-contest"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200).withBody(MockResponses.NewContestScript)))

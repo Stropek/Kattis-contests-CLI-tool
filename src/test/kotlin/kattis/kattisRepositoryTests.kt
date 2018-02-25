@@ -14,13 +14,16 @@ import kattis.models.Team
 import kattis.testData.MockResponses
 
 internal class KattisRepositoryTests {
-    private val _wireMockServer = WireMockServer()
+
+    private val _wireMockServer: WireMockServer = WireMockServer(MockPorts.KattisRepositoryTests)
+
+    init {
+        Config.Port = "${MockPorts.KattisRepositoryTests}"
+    }
 
     @BeforeEach fun testSetUp() {
-        if (!_wireMockServer.isRunning) {
-            _wireMockServer.start()
-        }
-        _wireMockServer.resetAll()
+        _wireMockServer.start()
+        WireMock.configureFor(MockPorts.KattisRepositoryTests)
 
         stubFor(post(urlEqualTo("/login"))
                 .willReturn(aResponse()
