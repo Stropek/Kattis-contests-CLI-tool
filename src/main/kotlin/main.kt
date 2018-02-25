@@ -2,6 +2,7 @@ import kattis.Command
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.ShowHelpException
+import interfaces.IFileReader
 
 import mu.KotlinLogging
 
@@ -14,17 +15,16 @@ import kattis.KattisRepository
 private const val appName = "Kattis Competition CLI"
 private val logger = KotlinLogging.logger {}
 
-fun main(args: Array<String>) {
+fun main(args: Array<String>, reader: IFileReader = FileReader()) {
     try
     {
-        println("Hallo from main!")
         logger.info { "Running $appName." }
         val argsParser = ArgParser(args)
         val kattisArgs = KattisCliArgs(argsParser)
         argsParser.force()
 
-        logger.info { "Running $appName." }
-        run(kattisArgs)
+        logger.info { "Executing command..." }
+        run(kattisArgs, reader)
         logger.info { "Finished. Exiting $appName." }
     }
     catch (ex: ShowHelpException)
@@ -39,8 +39,7 @@ fun main(args: Array<String>) {
     }
 }
 
-private fun run(args: KattisCliArgs) {
-    val reader = FileReader()
+private fun run(args: KattisCliArgs, reader: IFileReader) {
     val command = Command(args, reader)
 
     val repo = KattisRepository()
