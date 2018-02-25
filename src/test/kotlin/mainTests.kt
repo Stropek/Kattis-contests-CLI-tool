@@ -25,11 +25,8 @@ internal class MainTests {
     }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
-        val wireMockServer = WireMockServer(MockPorts.MainTests)
+        val wireMockServer = WireMockServer()
         wireMockServer.start()
-
-        Config.Port = "${MockPorts.MainTests}"
-        WireMock.configureFor(MockPorts.MainTests)
 
         stubFor(get(urlPathEqualTo("/new-contest"))
                 .willReturn(WireMock.aResponse()

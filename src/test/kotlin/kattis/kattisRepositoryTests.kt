@@ -15,15 +15,10 @@ import kattis.testData.MockResponses
 
 internal class KattisRepositoryTests {
 
-    private val _wireMockServer: WireMockServer = WireMockServer(MockPorts.KattisRepositoryTests)
-
-    init {
-        Config.Port = "${MockPorts.KattisRepositoryTests}"
-    }
+    private val _wireMockServer: WireMockServer = WireMockServer()
 
     @BeforeEach fun testSetUp() {
         _wireMockServer.start()
-        WireMock.configureFor(MockPorts.KattisRepositoryTests)
 
         stubFor(post(urlEqualTo("/login"))
                 .willReturn(aResponse()
