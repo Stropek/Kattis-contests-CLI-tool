@@ -23,7 +23,11 @@ internal class MainTests {
     }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
-        _wireMockServer.start()
+        if (!_wireMockServer.isRunning) {
+            _wireMockServer.start()
+        }
+        _wireMockServer.resetAll()
+
         stubFor(get(urlPathEqualTo("/new-contest"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200).withBody(MockResponses.NewContestScript)))

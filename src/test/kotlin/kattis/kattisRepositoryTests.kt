@@ -17,7 +17,10 @@ internal class KattisRepositoryTests {
     private val _wireMockServer = WireMockServer()
 
     @BeforeEach fun testSetUp() {
-        _wireMockServer.start()
+        if (!_wireMockServer.isRunning) {
+            _wireMockServer.start()
+        }
+        _wireMockServer.resetAll()
 
         stubFor(post(urlEqualTo("/login"))
                 .willReturn(aResponse()
