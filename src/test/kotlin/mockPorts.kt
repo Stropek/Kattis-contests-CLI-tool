@@ -1,4 +1,4 @@
 object MockPorts {
-    val KattisRepositoryTests = 5000
-    val MainTests = 5001
+    const val KattisRepositoryTests = 5000
+    const val MainTests = 5001
 }
