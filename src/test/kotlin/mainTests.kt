@@ -33,7 +33,8 @@ internal class MainTests {
                         .withStatus(200).withBody(MockResponses.NewContestScript)))
         stubFor(post(urlPathEqualTo("/login"))
                 .willReturn(WireMock.aResponse()
-                        .withStatus(200)))
+                        .withStatus(200)
+                        .withHeader("Set-Cookie", "cookie=value")))
         stubFor(put(urlPathEqualTo("/ajax/session"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200).withBody(MockResponses.Contest)))
@@ -56,8 +57,8 @@ internal class MainTests {
                         .withStatus(200)))
 
         val mockFileReader = mock<IFileReader> {
-            on { read("teams") } doReturn mutableListOf("team_1: test-member-1-1, test-member-1-2", "team_2: test-member-2-1")
-            on { read("credentials") } doReturn mutableListOf("username: test-user", "token: test-token")
+            on { read("teams") } doReturn mutableListOf("# commented line", "team_1: test-member-1-1, test-member-1-2", "team_2: test-member-2-1")
+            on { read("credentials") } doReturn mutableListOf("username: test-user", "", "token: test-token")
         }
 
         val args = arrayOf("--teams", "teams", "--settings", "credentials", "-v")

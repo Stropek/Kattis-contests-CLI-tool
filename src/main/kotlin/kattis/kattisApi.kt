@@ -52,7 +52,7 @@ class KattisApi(private val kattisRepository: IKattisRepository) {
             selectedProblems.add(selectedProblem)
 
             logger.debug { "Selected problem #$selectedNumber -> ${selectedProblem.name}" }
-        } while (rows.size > 0 && selectedNumbers.size < numberOfProblems)
+        } while (selectedNumbers.size < numberOfProblems && rows.size > 0)
 
         return selectedProblems
     }
