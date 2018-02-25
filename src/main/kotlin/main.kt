@@ -11,7 +11,7 @@ import kattis.KattisApi
 import kattis.KattisCliArgs
 import kattis.KattisRepository
 
-private val appName = "Kattis Competition CLI"
+private const val appName = "Kattis Competition CLI"
 private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
     }
 }
 
-fun run(args: KattisCliArgs) {
+private fun run(args: KattisCliArgs) {
     val reader = FileReader()
     val command = Command(args, reader)
 

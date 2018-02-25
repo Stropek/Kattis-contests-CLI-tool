@@ -106,7 +106,7 @@ internal class KattisRepositoryTests {
 
         // then
         verify(putRequestedFor(urlEqualTo("/ajax/session")))
-        assertEquals("redirect_value", result.getJSONObject("response").getString("redirect"))
+        assertEquals("redirect_value", result.getJSONObject("response").getString("redirect").split("/")[2])
     }
     @Test fun `getNewContestPage - returns new contest's html page`() {
         // given

@@ -3,7 +3,7 @@ package kattis.models
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TeamTests {
+internal class TeamTests {
     @Test fun `primary constructor should set default values`() {
         // when
         val result = Team("team_1", listOf("member_1", "member_2"))

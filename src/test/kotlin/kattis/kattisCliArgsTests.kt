@@ -4,7 +4,7 @@ import com.xenomachina.argparser.ArgParser
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class KattisCliArgsTests {
+internal class KattisCliArgsTests {
     @Test fun `constructor - no args - sets default values`() {
         // given
         val args = arrayOf<String>()

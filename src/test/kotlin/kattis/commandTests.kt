@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Assertions.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-class CommandTests {
+internal class CommandTests {
     @Test fun `constructor() - credentials - args with user and token - sets credentials`() {
         // given
         val args = arrayOf("-u", "jon", "-t", "snow")
