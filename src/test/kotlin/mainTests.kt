@@ -6,12 +6,6 @@ import org.junit.jupiter.api.Test
 
 internal class MainTests {
 
-    private val _wireMockServer: WireMockServer = WireMockServer(MockPorts.MainTests)
-
-    init {
-        Config.Port = "${MockPorts.MainTests}"
-    }
-
     @Test fun `main - invalid parameter - completes successfully`() {
         // given
         val args = arrayOf("-invalid")
@@ -28,8 +22,12 @@ internal class MainTests {
     }
     @Test fun `main - valid parameters - completes successfully`() {
         // given
-        _wireMockServer.start()
+        val wireMockServer = WireMockServer(MockPorts.MainTests)
+        wireMockServer.start()
+
+        Config.Port = "${MockPorts.MainTests}"
         WireMock.configureFor(MockPorts.MainTests)
+
         stubFor(get(urlPathEqualTo("/new-contest"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200).withBody(MockResponses.NewContestScript)))
@@ -75,6 +73,7 @@ internal class MainTests {
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/problem")))
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/team")))
         verify(postRequestedFor(urlPathEqualTo("/ajax/session/team/member")))
-        _wireMockServer.stop()
+
+        wireMockServer.stop()
     }
 }
