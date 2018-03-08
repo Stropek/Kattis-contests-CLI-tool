@@ -15,7 +15,11 @@ import kattis.KattisRepository
 private const val appName = "Kattis Competition CLI"
 private val logger = KotlinLogging.logger {}
 
-fun main(args: Array<String>, reader: IFileReader = FileReader()) {
+fun main(args: Array<String>) {
+    main(args, FileReader())
+}
+
+fun main(args: Array<String>, reader: IFileReader) {
     try
     {
         logger.info { "Running $appName." }
