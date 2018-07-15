@@ -16,13 +16,15 @@ private const val appName = "Kattis Competition CLI"
 private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
+    logger.info { "Running $appName." }
+    logger.info { "Parameters: ${args.joinToString(separator = " ")}" }
+
     main(args, FileReader())
 }
 
 fun main(args: Array<String>, reader: IFileReader) {
     try
     {
-        logger.info { "Running $appName." }
         val argsParser = ArgParser(args)
         val kattisArgs = KattisCliArgs(argsParser)
         argsParser.force()
